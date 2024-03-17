@@ -55,7 +55,7 @@ services:
       context: ../gm_gateway
       dockerfile: Dockerfile
     ports:
-      - 8800:8800
+      - 10440:10440
     environment:
       EUREKA_URI: http://eureka-server:8761/eureka
       ADMIN_ID: gm-administrator
