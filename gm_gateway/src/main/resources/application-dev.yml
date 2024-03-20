@@ -1,0 +1,54 @@
+server:
+  port: 10440
+
+spring.application.name: gm_gateway
+spring.cloud.discovery.enabled: true
+
+spring.cloud.gateway.discovery.locator.enabled: true
+spring.cloud.gateway.discovery.locator.lowerCaseServiceId: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+
+gateway:
+  allowed:
+    hosts: "*"
+spring.cloud.gateway:
+  default-filters:
+    request-size: 250000000
+  httpclient:
+    connect-timeout: 10000
+    response-timeout: 60s
+  globalcors:
+    add-to-simple-url-handler-mapping: true
+    cors-configurations:
+      '[/**]':
+        allowed-origins: "*"
+        allowed-methods:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+          - OPTIONS
+        allowed-headers: "*"
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: ${ADMIN_ID:gm-administrator}
+          uri: ${ADMIN_URI:http://localhost:8801}
+          predicates:
+            - Path=/admin/**
+          filters:
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+            - AddResponseHeader=appId,${gateway.for.app.code}
+            - StripPrefix=1
+        - id: ${STORY_ID:gm-stories}
+          uri: ${STORY_URI:http://localhost:8803}
+          predicates:
+            - Path=/story/**
+          filters:
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+            - StripPrefix=1
