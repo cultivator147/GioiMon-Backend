@@ -12,43 +12,44 @@ eureka:
     serviceUrl:
       defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
 
+application:
+  cors:
+    allowed-origins: ${ALLOWED_ORIGINS:*}
+    allowed-methods: ${ALLOWED_METHODS:*}
+    allowed-headers: ${ALLOWED_HEADERS:*}
 gateway:
   allowed:
     hosts: "*"
 spring.cloud.gateway:
   default-filters:
-    request-size: 250000000
+    - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
   httpclient:
     connect-timeout: 10000
     response-timeout: 60s
   globalcors:
-    add-to-simple-url-handler-mapping: true
     cors-configurations:
-      '[/**]':
-        allowed-origins: "*"
-        allowed-methods:
+      "[/**]":
+        allowedOrigins: "http://localhost:3000"
+        allowedHeaders: "*"
+        allowedMethods:
           - GET
           - POST
-          - PUT
           - DELETE
+          - PUT
           - OPTIONS
-        allowed-headers: "*"
-spring:
-  cloud:
-    gateway:
-      routes:
-        - id: ${ADMIN_ID:gm-administrator}
-          uri: ${ADMIN_URI:http://localhost:8801}
-          predicates:
-            - Path=/admin/**
-          filters:
-            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
-            - AddResponseHeader=appId,${gateway.for.app.code}
-            - StripPrefix=1
-        - id: ${STORY_ID:gm-stories}
-          uri: ${STORY_URI:http://localhost:8803}
-          predicates:
-            - Path=/story/**
-          filters:
-            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
-            - StripPrefix=1
+  routes:
+    - id: ${ADMIN_ID:gm-administrator}
+      uri: ${ADMIN_URI:http://localhost:8801}
+      predicates:
+        - Path=/admin/**
+      filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin
+        - AddResponseHeader=appId,${gateway.for.app.code}
+        - StripPrefix=1
+    - id: ${STORY_ID:gm-stories}
+      uri: ${STORY_URI:http://localhost:8803}
+      predicates:
+        - Path=/story/**
+      filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin
+        - StripPrefix=1

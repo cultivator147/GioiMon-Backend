@@ -1,1 +1,55 @@
-spring.profiles.active: dev
+server:
+  port: 10440
+
+spring.application.name: gm_gateway
+spring.cloud.discovery.enabled: true
+
+spring.cloud.gateway.discovery.locator.enabled: true
+spring.cloud.gateway.discovery.locator.lowerCaseServiceId: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+
+gateway:
+  allowed:
+    hosts: "*"
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        corsConfigurations:
+          "[/**]":
+            allowedOrigins: "http://localhost:3000"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - DELETE
+              - PUT
+              - OPTIONS
+      # Remove the default filters
+      routes:
+        - id: ${USER_ID:gm-user}
+          uri: ${USER_URI:http://localhost:8801}
+          predicates:
+            - Path=/user/**
+          filters:
+            - DedupeResponseHeader=Access-Control-Allow-Origin
+            - StripPrefix=1
+        - id: ${STORY_ID:gm-stories}
+          uri: ${STORY_URI:http://localhost:8803}
+          predicates:
+            - Path=/story/**
+          filters:
+            - DedupeResponseHeader=Access-Control-Allow-Origin
+            - StripPrefix=1
+application:
+  cors:
+    allowed-origins: ${ALLOWED_ORIGINS:*}
+    allowed-methods: ${ALLOWED_METHODS:*}
+    allowed-headers: ${ALLOWED_HEADERS:*}
+

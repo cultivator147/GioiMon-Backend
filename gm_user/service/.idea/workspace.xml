@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="95488f33-61d2-4f21-bf44-ad7562b057e5" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../init.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../users.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/client/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/client/src/main/java/hust/project/gioimon/adm_client/check_permission/CheckPermissionAnno.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/client/src/main/java/hust/project/gioimon/adm_client/check_permission/CheckPermissionAspect.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/client/src/main/java/hust/project/gioimon/adm_client/exceptions/ErrorsDefinition.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/client/src/main/java/hust/project/gioimon/adm_client/exceptions/TypeError.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/client/src/main/java/hust/project/gioimon/adm_client/model/ResponseData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/client/src/main/java/hust/project/gioimon/adm_client/utils/I18n.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/sql/Stories.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/src/main/java/hust/project/gioimon/adm_service/GioiMonAdministrator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/src/main/java/hust/project/gioimon/adm_service/controllers/AuthenticationController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/src/main/java/hust/project/gioimon/adm_service/controllers/DemoController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/src/main/java/hust/project/gioimon/adm_service/controllers/ProfileController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/src/main/java/hust/project/gioimon/adm_service/exceptions/GlobalExceptionHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/src/main/java/hust/project/gioimon/adm_service/exceptions/custom/ApplicationException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/src/main/java/hust/project/gioimon/adm_service/exceptions/custom/UserDoesNotExistException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/src/main/java/hust/project/gioimon/adm_service/exceptions/custom/UsernameExistedException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/src/main/java/hust/project/gioimon/adm_service/model/dto/request/LoginRequestDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/src/main/java/hust/project/gioimon/adm_service/model/dto/request/Profile.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/src/main/java/hust/project/gioimon/adm_service/model/dto/response/CheckPermissionDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/src/main/java/hust/project/gioimon/adm_service/model/dto/response/LoginResponseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/src/main/java/hust/project/gioimon/adm_service/repository/jdbc/BaseRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/src/main/java/hust/project/gioimon/adm_service/repository/jdbc/ProfileRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/src/main/java/hust/project/gioimon/adm_service/repository/jdbc/UserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/src/main/java/hust/project/gioimon/adm_service/service/AuthenticationService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/src/main/java/hust/project/gioimon/adm_service/service/AuthenticationServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/src/main/java/hust/project/gioimon/adm_service/service/ProfileService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/src/main/java/hust/project/gioimon/adm_service/utils/BaseResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/src/main/java/hust/project/gioimon/adm_service/utils/StringUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/src/main/resources/messages.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Administrator/service/src/main/resources/messages_vi.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GioiMon-Stories/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../gm_gateway/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../gm_gateway/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../gm_gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../gm_gateway/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../client/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/main/java/hust/project/gioimon/gm_user/client/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hust/project/gioimon/gm_user/service/GioiMonUserServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/hust/project/gioimon/service/client/gm_user/GmUserApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../pom.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 3
+}]]></component>
+  <component name="ProjectId" id="2e9bVWxhFoPrqIGl68Bj1TKOcjq" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "H:/HUST/2023_1/Prj3 - Middle/Backend/git-repo/GioiMon-Backend"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="95488f33-61d2-4f21-bf44-ad7562b057e5" name="Changes" comment="" />
+      <created>1711319765662</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1711319765662</updated>
+    </task>
+    <servers />
+  </component>
+</project>
