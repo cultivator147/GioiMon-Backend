@@ -1,19 +1,5 @@
 version: "3.7"
 services:
-  mysql:
-    build: mysql
-    platform: linux/amd64
-    image: mysql:latest
-    container_name: mysql
-    restart: always
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./users.sql:/docker-entrypoint-initdb.d/users.sql
-    ports:
-      - 3307:3306
-    environment:
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: gm_stories
   eureka-server:
     build:
       context: ./eureka-server
@@ -28,12 +14,11 @@ services:
       - 8803:8803
     restart: always
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/gm_stories?createDatabaseIfNotExist=true
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_DATASOURCE_URL: jdbc:mysql://database-1.c3goi4eyoa0r.ap-southeast-2.rds.amazonaws.com/gm_stories
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: ZkMErAor36cJsjMEXFR9
       EUREKA_URI: http://eureka-server:8761/eureka
     depends_on:
-      - mysql
       - eureka-server
   gm-user:
     build:
@@ -43,12 +28,11 @@ services:
       - 8801:8801
     restart: always
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/gm_users?createDatabaseIfNotExist=true
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_DATASOURCE_URL: jdbc:mysql://database-1.c3goi4eyoa0r.ap-southeast-2.rds.amazonaws.com/gm_users
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: ZkMErAor36cJsjMEXFR9
       EUREKA_URI: http://eureka-server:8761/eureka
     depends_on:
-      - mysql
       - eureka-server
   gm_gateway:
     build:
