@@ -1,0 +1,13 @@
+package hust.project.gioimon.gm_post.service;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+@SpringBootApplication
+@EnableDiscoveryClient
+public class GioiMonPost {
+    public static void main(String[] args) {
+        SpringApplication.run(GioiMonPost.class, args);
+    }
+}
