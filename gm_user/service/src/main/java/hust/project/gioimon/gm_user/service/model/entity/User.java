@@ -14,10 +14,18 @@ import lombok.Setter;
 @Setter
 public class User {
     @Id
-    @Column(name = "ID")
-    private Long id;
-    @Column(name = "USERNAME")
+    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+    @Column(name = "username", nullable = false)
     private String username;
-    @Column(name = "PASSWORD")
+    @Column(name = "password", nullable = false)
     private String password;
+    @Column
+    private String accessToken;
+    @Column
+    private long tokExpTime;
+    @Column
+    private int status;
+
 }

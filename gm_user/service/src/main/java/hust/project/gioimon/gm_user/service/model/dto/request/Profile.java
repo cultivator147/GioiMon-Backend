@@ -6,7 +6,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Profile {
+public class   Profile {
     private long userId;
     private String nickname;
     private String picture;

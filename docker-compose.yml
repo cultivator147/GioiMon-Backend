@@ -6,6 +6,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8761:8761
+    networks:
+      - gm-net
   gm-stories:
     build:
       context: ./GioiMon-Stories
@@ -18,6 +20,8 @@ services:
       SPRING_DATASOURCE_USERNAME: admin
       SPRING_DATASOURCE_PASSWORD: ZkMErAor36cJsjMEXFR9
       EUREKA_URI: http://eureka-server:8761/eureka
+    networks:
+      - gm-net
     depends_on:
       - eureka-server
   gm-user:
@@ -32,6 +36,8 @@ services:
       SPRING_DATASOURCE_USERNAME: admin
       SPRING_DATASOURCE_PASSWORD: ZkMErAor36cJsjMEXFR9
       EUREKA_URI: http://eureka-server:8761/eureka
+    networks:
+      - gm-net
     depends_on:
       - eureka-server
   gm_gateway:
@@ -46,9 +52,14 @@ services:
       USER_URI: lb://gm-user
       STORY_ID: gm-stories
       STORY_URI: lb://gm-stories
+    networks:
+      - gm-net
     depends_on:
       - eureka-server
       - gm-user
       - gm-stories
+networks:
+  gm-net:
+    name: gm-network
 volumes:
   data:
