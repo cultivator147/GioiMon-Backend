@@ -40,6 +40,24 @@ services:
       - gm-net
     depends_on:
       - eureka-server
+  gm-post:
+    build:
+      context: ./gm_post
+      dockerfile: Dockerfile
+    ports:
+      - "8802:8802"
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://database-1.c3goi4eyoa0r.ap-southeast-2.rds.amazonaws.com/gm_post
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: ZkMErAor36cJsjMEXFR9
+      EUREKA_URI: http://eureka-server:8761/eureka
+    networks:
+      - gm-net
+    depends_on:
+      - eureka-server
+      - gm-stories
+      - gm-user
   gm_gateway:
     build:
       context: ./gm_gateway

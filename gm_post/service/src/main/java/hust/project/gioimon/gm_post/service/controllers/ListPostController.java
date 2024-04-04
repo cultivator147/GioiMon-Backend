@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1.0/list-post")
+@CrossOrigin("http://localhost:3000")
 @RequiredArgsConstructor
 public class ListPostController {
     private final ListPostService listPostService;
