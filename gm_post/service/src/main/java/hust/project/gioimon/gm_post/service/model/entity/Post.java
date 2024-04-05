@@ -26,7 +26,7 @@ public class Post {
     @Column(name = "content")
     private String content;
     @Column(name = "images")
-    private String images;
+    private String[] images;
     @Column(name = "create_time")
     private Long createTime;
     @Column(name = "last_edit_time")

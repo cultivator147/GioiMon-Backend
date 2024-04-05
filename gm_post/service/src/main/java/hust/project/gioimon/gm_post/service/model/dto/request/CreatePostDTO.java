@@ -13,6 +13,6 @@ public class CreatePostDTO {
     private long storyId;
     private String title;
     private String content;
-    private String images;
+    private String[] images;
     private String videos;
 }
