@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -13,6 +15,6 @@ public class CreatePostDTO {
     private long storyId;
     private String title;
     private String content;
-    private String[] images;
+    private List<String> images;
     private String videos;
 }

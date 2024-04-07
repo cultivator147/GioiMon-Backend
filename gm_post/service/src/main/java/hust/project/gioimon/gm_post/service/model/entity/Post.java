@@ -1,10 +1,14 @@
 package hust.project.gioimon.gm_post.service.model.entity;
 
+import hust.project.gioimon.gm_post.service.converter.StringListConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "posts")
@@ -26,7 +30,8 @@ public class Post {
     @Column(name = "content")
     private String content;
     @Column(name = "images")
-    private String[] images;
+    @Convert(converter = StringListConverter.class)
+    private List<String> images = new ArrayList<>();
     @Column(name = "create_time")
     private Long createTime;
     @Column(name = "last_edit_time")
