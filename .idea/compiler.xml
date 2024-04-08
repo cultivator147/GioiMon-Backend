@@ -10,13 +10,8 @@
         <module name="gm_gateway" />
         <module name="eureka-server" />
         <module name="service" />
-        <module name="client (2)" />
-      </profile>
-      <profile name="Annotation profile for Gioi Mon" enabled="true">
-        <sourceOutputDir name="../../gm_user/client/target/generated-sources/annotations" />
-        <sourceTestOutputDir name="../../gm_user/client/target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
         <module name="client (1)" />
+        <module name="client (2)" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
