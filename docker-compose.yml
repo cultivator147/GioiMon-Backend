@@ -16,7 +16,7 @@ services:
       - "8803:8803"
     restart: always
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://3.27.170.137:3306/gm_stories
+      SPRING_DATASOURCE_URL: jdbc:mysql://54.153.185.93:3306/gm_stories
       SPRING_DATASOURCE_USERNAME: gm
       SPRING_DATASOURCE_PASSWORD: 1234
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
@@ -30,10 +30,10 @@ services:
       context: ./gm_user
       dockerfile: Dockerfile
     ports:
-      - 8801:8801
+      - "8801:8801"
     restart: always
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://3.27.170.137:3306/gm_users
+      SPRING_DATASOURCE_URL: jdbc:mysql://54.153.185.93:3306/gm_users
       SPRING_DATASOURCE_USERNAME: gm
       SPRING_DATASOURCE_PASSWORD: 1234
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
@@ -50,7 +50,7 @@ services:
       - "8802:8802"
     restart: always
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://3.27.170.137:3306/gm_post
+      SPRING_DATASOURCE_URL: jdbc:mysql://54.153.185.93:3306/gm_post
       SPRING_DATASOURCE_USERNAME: gm
       SPRING_DATASOURCE_PASSWORD: 1234
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
