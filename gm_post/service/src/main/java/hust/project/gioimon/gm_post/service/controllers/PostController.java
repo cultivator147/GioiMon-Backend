@@ -3,6 +3,9 @@ package hust.project.gioimon.gm_post.service.controllers;
 import hust.project.gioimon.gm_post.client.model.ResponseData;
 import hust.project.gioimon.gm_post.service.model.dto.request.CreatePostDTO;
 import hust.project.gioimon.gm_post.service.model.dto.request.GetDetailPostDTO;
+import hust.project.gioimon.gm_post.service.model.entity.Post;
+import hust.project.gioimon.gm_post.service.model.entity.PostFavourite;
+import hust.project.gioimon.gm_post.service.service.PostFavouriteService;
 import hust.project.gioimon.gm_post.service.service.PostService;
 import hust.project.gioimon.gm_post.service.utils.BaseResponse;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +21,7 @@ import static hust.project.gioimon.gm_post.service.utils.TokenUtil.getUserIdFrom
 @CrossOrigin("http://localhost:3000")
 public class PostController {
     private final PostService postService;
+    private final PostFavouriteService postFavouriteService;
     @PostMapping(value = "/")
     public ResponseEntity<ResponseData<Object>> createPost(HttpServletRequest request, @RequestBody CreatePostDTO createPostDTO){
         Long userId = getUserIdFromRequest(request);
@@ -27,5 +31,9 @@ public class PostController {
     @GetMapping(value = "/")
     public ResponseEntity<ResponseData<Object>> getPost(@RequestBody GetDetailPostDTO body){
         return BaseResponse.success(postService.getPost(body));
+    }
+    @PostMapping(value = "/fav-post")
+    public ResponseEntity<ResponseData<Post>> favouritePost(@RequestBody PostFavourite body){
+        return BaseResponse.success(postFavouriteService.favouritePost(body));
     }
 }

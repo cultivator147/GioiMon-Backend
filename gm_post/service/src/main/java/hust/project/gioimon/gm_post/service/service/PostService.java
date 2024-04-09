@@ -21,4 +21,11 @@ public class PostService {
         Optional<Post> postOpt =  postRepository.findById(body.getPostId());
         return postOpt.orElse(null);
     }
+    public void updateFavInteraction(long postId, long favCount, double favAvgPoint){
+        postRepository.updatePostInteraction(postId,favAvgPoint, favCount);
+    }
+    public Post getPost(Long postId) {
+        Optional<Post> postOpt =  postRepository.findById(postId);
+        return postOpt.orElse(null);
+    }
 }

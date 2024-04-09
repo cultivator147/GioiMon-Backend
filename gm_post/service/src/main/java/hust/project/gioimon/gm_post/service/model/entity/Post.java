@@ -38,5 +38,11 @@ public class Post {
     private String lastEditTime;
     @Column(name = "videos")
     private String videos;
+    @Column(name = "fav_count")
+    private long favouriteCount;
+    @Column(name = "fav_avg_pnt")
+    private double averageFavouritePoint;
+    @Column(name = "comment_count")
+    private long commentCount;
 
 }
