@@ -47,6 +47,13 @@ spring:
           filters:
             - DedupeResponseHeader=Access-Control-Allow-Origin
             - StripPrefix=1
+        - id: ${POST_ID:gm-post}
+          uri: ${POST_URI:http://localhost:8802}
+          predicates:
+            - Path=/post/**
+          filters:
+            - DedupeResponseHeader=Access-Control-Allow-Origin
+            - StripPrefix=1
 application:
   cors:
     allowed-origins: ${ALLOWED_ORIGINS:*}

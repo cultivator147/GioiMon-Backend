@@ -73,12 +73,15 @@ services:
       USER_URI: lb://gm-user
       STORY_ID: gm-stories
       STORY_URI: lb://gm-stories
+      POST_ID: gm-post
+      POST_URI: lb://gm-post
     networks:
       - gm-net
     depends_on:
       - eureka-server
       - gm-user
       - gm-stories
+      - gm-post
 networks:
   gm-net:
     name: gm-network
