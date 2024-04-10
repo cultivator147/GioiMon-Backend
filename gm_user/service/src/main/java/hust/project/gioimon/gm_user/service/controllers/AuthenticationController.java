@@ -23,7 +23,5 @@ public class AuthenticationController {
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseData<LoginResponseDTO>> register(@RequestBody  LoginRequestDTO rqDTO){
         return BaseResponse.success(authenticationService.register(rqDTO));
-
     }
-
 }
