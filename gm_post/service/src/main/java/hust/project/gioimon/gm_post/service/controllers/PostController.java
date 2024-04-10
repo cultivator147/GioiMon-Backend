@@ -23,7 +23,7 @@ import static hust.project.gioimon.gm_post.service.utils.TokenUtil.getUserIdFrom
 public class PostController {
     private final PostService postService;
     private final PostFavouriteService postFavouriteService;
-    @CheckPermissionAnno(uri = "create-post")
+//    @CheckPermissionAnno(uri = "create-post")
     @PostMapping(value = "/")
     public ResponseEntity<ResponseData<Object>> createPost(HttpServletRequest request, @RequestBody CreatePostDTO createPostDTO){
         Long userId = getUserIdFromRequest(request);
@@ -34,7 +34,7 @@ public class PostController {
     public ResponseEntity<ResponseData<Object>> getPost(@RequestBody GetDetailPostDTO body){
         return BaseResponse.success(postService.getPost(body));
     }
-    @CheckPermissionAnno(uri = "create-post")
+//    @CheckPermissionAnno(uri = "create-post")
     @PostMapping(value = "/fav-post")
     public ResponseEntity<ResponseData<Post>> favouritePost(@RequestBody PostFavourite body){
         return BaseResponse.success(postFavouriteService.favouritePost(body));
