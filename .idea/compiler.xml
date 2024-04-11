@@ -6,17 +6,21 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="client" />
-        <module name="gm_gateway" />
+        <module name="gm-user" />
+        <module name="gm-gateway" />
+        <module name="gm-story" />
         <module name="eureka-server" />
-        <module name="service" />
-        <module name="client (1)" />
-        <module name="client (2)" />
+        <module name="gm-post" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="client" target="17" />
+      <module name="client (1)" target="17" />
+      <module name="client (2)" target="17" />
       <module name="client (3)" target="17" />
       <module name="gm-administrator" target="17" />
+      <module name="gm-stories" target="17" />
+      <module name="service" target="17" />
       <module name="service (1)" target="17" />
       <module name="service (2)" target="17" />
     </bytecodeTargetLevel>
@@ -27,7 +31,9 @@
       <module name="client (1)" options="-parameters" />
       <module name="client (2)" options="" />
       <module name="client (3)" options="-parameters" />
-      <module name="gm_gateway" options="-parameters" />
+      <module name="gm-gateway" options="-parameters" />
+      <module name="gm-post" options="-parameters" />
+      <module name="gm-story" options="-parameters" />
       <module name="service" options="-parameters" />
       <module name="service (1)" options="-parameters" />
       <module name="service (2)" options="-parameters" />

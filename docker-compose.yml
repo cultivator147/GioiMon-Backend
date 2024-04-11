@@ -1,17 +1,24 @@
 version: "3.7"
 services:
   eureka-server:
-    build:
-      context: ./eureka-server
-      dockerfile: Dockerfile
+    image: openjdk:17-jdk-slim
+    container_name: eureka-server
+    volumes:
+      - ./eureka-server/target:/var/app/gm
     ports:
-      - 8761:8761
+      - "8761:8761"
     networks:
       - gm-net
-  gm-stories:
-    build:
-      context: ./gioimon-stories
-      dockerfile: Dockerfile
+    working_dir: /var/app/gm
+    entrypoint:
+      - java
+      - -jar
+      - eureka-server-0.0.1-SNAPSHOT.jar
+  gm-story:
+    image: openjdk:17-jdk-slim
+    container_name: gm-story
+    volumes:
+      - ./gm-story/target:/var/app/gm
     ports:
       - "8803:8803"
     restart: always
@@ -21,14 +28,20 @@ services:
       SPRING_DATASOURCE_PASSWORD: 1234
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
       EUREKA_URI: http://eureka-server:8761/eureka
+    entrypoint:
+      - java
+      - -jar
+      - gm-story-0.0.1-SNAPSHOT.jar
     networks:
       - gm-net
+    working_dir: /var/app/gm
     depends_on:
       - eureka-server
   gm-user:
-    build:
-      context: ./gm_user
-      dockerfile: Dockerfile
+    image: openjdk:17-jdk-slim
+    volumes:
+      - ./gm-user/target:/var/app/gm
+    container_name: gm-user
     ports:
       - "8801:8801"
     restart: always
@@ -40,12 +53,18 @@ services:
       EUREKA_URI: http://eureka-server:8761/eureka
     networks:
       - gm-net
+    working_dir: /var/app/gm
     depends_on:
       - eureka-server
+    entrypoint:
+      - java
+      - -jar
+      - gm-user-0.0.1-SNAPSHOT.jar
   gm-post:
-    build:
-      context: ./gm_post
-      dockerfile: Dockerfile
+    image: openjdk:17-jdk-slim
+    container_name: gm-post
+    volumes:
+      - ./gm-post/target:/var/app/gm
     ports:
       - "8802:8802"
     restart: always
@@ -57,31 +76,42 @@ services:
       EUREKA_URI: http://eureka-server:8761/eureka
     networks:
       - gm-net
+    working_dir: /var/app/gm
     depends_on:
       - eureka-server
-      - gm-stories
+      - gm-story
       - gm-user
+    entrypoint:
+      - java
+      - -jar
+      - gm-post-0.0.1-SNAPSHOT.jar
   gm_gateway:
-    build:
-      context: ./gm_gateway
-      dockerfile: Dockerfile
+    image: openjdk:17-jdk-slim
+    container_name: gm-gateway
+    volumes:
+      - ./gm-gateway/target:/var/app/gm
     ports:
-      - 10440:10440
+      - "10440:10440"
     environment:
       EUREKA_URI: http://eureka-server:8761/eureka
       USER_ID: gm-user
       USER_URI: lb://gm-user
-      STORY_ID: gm-stories
-      STORY_URI: lb://gm-stories
+      STORY_ID: gm-story
+      STORY_URI: lb://gm-story
       POST_ID: gm-post
       POST_URI: lb://gm-post
     networks:
       - gm-net
+    working_dir: /var/app/gm
     depends_on:
       - eureka-server
       - gm-user
-      - gm-stories
+      - gm-story
       - gm-post
+    entrypoint:
+      - java
+      - -jar
+      - gm-gateway-0.0.1-SNAPSHOT.jar
 networks:
   gm-net:
     name: gm-network

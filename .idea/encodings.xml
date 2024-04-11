@@ -6,12 +6,20 @@
     <file url="file://$PROJECT_DIR$/GioiMon-Administrator/service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/GioiMon-Administrator/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/GioiMon-Administrator/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/GioiMon-Stories/client/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/GioiMon-Stories/client/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/GioiMon-Stories/service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/GioiMon-Stories/service/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/GioiMon-Stories/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/GioiMon-Stories/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gioimon-stories/client/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gioimon-stories/client/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gioimon-stories/service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gioimon-stories/service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gioimon-stories/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gioimon-stories/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gm-gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gm-post/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gm-story/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gm-story/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gm-user/client/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gm-user/service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gm-user/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gm-user/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gm_gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gm_user/client/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gm_user/client/src/main/resources" charset="UTF-8" />
