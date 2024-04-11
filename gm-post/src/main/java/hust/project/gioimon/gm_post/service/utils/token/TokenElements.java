@@ -1,16 +1,14 @@
 package hust.project.gioimon.gm_post.service.utils.token;
 
 import hust.project.gioimon.gm_post.service.utils.Validator;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Objects;
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class TokenElements {
     public static final String USER_ID_KEY = "id";
     public static final String ACCOUNT_ROLE = "role";

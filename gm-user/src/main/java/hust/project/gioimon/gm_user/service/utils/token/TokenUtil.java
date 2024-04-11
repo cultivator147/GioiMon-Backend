@@ -1,4 +1,4 @@
-package hust.project.gioimon.gm_user.service.utils;
+package hust.project.gioimon.gm_user.service.utils.token;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;

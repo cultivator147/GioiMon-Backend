@@ -1,6 +1,5 @@
-package hust.project.gioimon.gm_post.service.utils.token;
+package hust.project.gioimon.gm_user.service.utils.token;
 
-import com.sun.org.apache.xml.internal.security.Init;
 import io.jsonwebtoken.*;
 
 import javax.crypto.SecretKey;
@@ -12,7 +11,7 @@ public class JWTCreator {
     private static final String SIGNATURE = "GM_TOKEN_SIGNATURE_Hh1407";
 
     private JWTCreator() {
-        Init.init();
+
     }
 
     private static final JWTCreator instance = new JWTCreator();
@@ -22,14 +21,17 @@ public class JWTCreator {
     }
 
     public String sign(TokenElements tokenElement) {
+        JwtBuilder builder = Jwts.builder();
         ClaimsBuilder claimsBuilder = Jwts.claims();
         claimsBuilder.add(TokenElements.USER_ID_KEY, tokenElement.getUserId());
-
-        Claims claims = claimsBuilder.build();
-        JwtBuilder jwtBuilder = Jwts.builder();
-        jwtBuilder.claims(claims);
-        jwtBuilder.signWith(SignatureAlgorithm.ES256, SIGNATURE);
-        return jwtBuilder.compact();
+//        ClaimsBuilder claimsBuilder = Jwts.builder().claims(TokenElements.USER_ID_KEY, tokenElement.getUserId());
+//        claimsBuilder.add(TokenElements.USER_ID_KEY, tokenElement.getUserId());
+//
+//        Claims claims = claimsBuilder.build();
+//        JwtBuilder jwtBuilder = Jwts.builder();
+//        jwtBuilder.claims(claims);
+//        jwtBuilder.signWith(SignatureAlgorithm.ES256, SIGNATURE);
+        return builder.claims(claimsBuilder.build()).compact();
     }
 
     public TokenElements parse(String token) throws Exception {
@@ -42,7 +44,7 @@ public class JWTCreator {
 
 //            JwtParser parser = Jwts.parser();
             Claims body = parser.build().parseEncryptedClaims(token).getPayload();
-            String userId = (String) body.get(TokenElements.USER_ID_KEY);
+            Long userId = (Long) body.get(TokenElements.USER_ID_KEY);
             return TokenElements.builder()
                     .userId(userId)
                     .build();

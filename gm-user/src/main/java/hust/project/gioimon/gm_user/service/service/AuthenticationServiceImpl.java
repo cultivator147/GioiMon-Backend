@@ -7,6 +7,8 @@ import hust.project.gioimon.gm_user.service.model.entity.User;
 import hust.project.gioimon.gm_user.service.repository.jdbc.UserRepository;
 import hust.project.gioimon.gm_user.service.repository.jpa.UserInfoRepository;
 import hust.project.gioimon.gm_user.service.utils.StringUtil;
+import hust.project.gioimon.gm_user.service.utils.token.JWTCreator;
+import hust.project.gioimon.gm_user.service.utils.token.TokenElements;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +56,8 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         User user = userInfoRepository.findByUsername(username);
         //TODO: AUTHEN HERE
         //TODO: GENERATE Token:
-        String token = StringUtil.generateToken();
+        String token = JWTCreator.getInstance().sign(new TokenElements(user.getId(), user.getUsername(), 1, System.currentTimeMillis() + 24*60*60*1000));
+        System.out.println("token signed: " + token);
         user.setAccessToken(token);
         userInfoRepository.save(user);
         LoginResponseDTO loginResponseDTO = UserConverter.toDTO(user);
