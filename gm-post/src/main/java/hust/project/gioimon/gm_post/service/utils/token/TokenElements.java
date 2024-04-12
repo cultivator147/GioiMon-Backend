@@ -11,29 +11,23 @@ import java.util.Objects;
 @Builder
 public class TokenElements {
     public static final String USER_ID_KEY = "id";
-    public static final String ACCOUNT_ROLE = "role";
-    public static final String VERIFIED_AGE = "va";
-    public static final String CERTIFICATED = "cer";
-    public static final String IP = "ip";
-    public static final String ADJUST_ID = "adid";
+    public static final String ACCOUNT_ROLE_KEY = "role";
+    public static final String IP_KEY = "ip";
+    public static final String EXPIRATION_TIME = "exp";
 
 
-    private String userId;
-    private int verifiedAge;
-    private Integer applicationType;
-    private int certificatedStatus;
-    private String ip;
-    private String accountRole;
 
+    private Long userId;
+    private String username;
+    private Integer role;
+    private Long expirationTime;
     @Override
     public boolean equals(Object obj) {
         if (!Validator.validateNull(obj)) {
             return false;
         }
         TokenElements element = (TokenElements) obj;
-        return Objects.equals(this.getUserId(), element.getUserId())
-
-                && Objects.equals(this.getApplicationType(), element.getApplicationType());
+        return Objects.equals(this.getUserId(), element.getUserId());
     }
 
     @Override

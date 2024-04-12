@@ -1,5 +1,8 @@
-package hust.project.gioimon.gm_user.service.model.dto.request;
+package hust.project.gioimon.gm_user.service.model.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,10 +12,15 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class   Profile {
+@Entity
+public class Profile {
+    @Id
+    @Column(name = "user_id")
     private long userId;
+    @Column(name = "nickname")
     private String nickname;
-    private String picture;
+    @Column(name = "avatar")
+    private String avatar;
     private String dateOfBirth;
     private String zodiac;
     private String gender;

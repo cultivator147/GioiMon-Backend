@@ -18,6 +18,7 @@ public class PostFavouriteService {
 
     public synchronized Post favouritePost(Long userId, PostFavourite postFavourite) {
         Long postId = postFavourite.getPostId();
+        postFavourite.setUserId(userId);
         if (postService.getPost(postId) == null) {
             throw new RuntimeException();
         }

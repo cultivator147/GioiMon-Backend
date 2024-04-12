@@ -11,14 +11,16 @@ import java.util.Objects;
 @Builder
 public class TokenElements {
     public static final String USER_ID_KEY = "id";
-    public static final String ACCOUNT_ROLE = "role";
-    public static final String IP = "ip";
+    public static final String ACCOUNT_ROLE_KEY = "role";
+    public static final String IP_KEY = "ip";
+    public static final String EXPIRATION_TIME = "exp";
+
 
 
     private Long userId;
     private String username;
-    private int role;
-    private long expirationTime;
+    private Integer role;
+    private Long expirationTime;
     @Override
     public boolean equals(Object obj) {
         if (!Validator.validateNull(obj)) {

@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,7 @@ public class CheckPermissionAspect {
 
         this.userClient = userClient;
     }
-    @Around("@annotation(CheckPermissionAnno)")
+    @Before("@annotation(CheckPermissionAnno)")
     public void beforeCheckPermission(JoinPoint joinPoint){
         System.out.println("Before checking permission");
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
@@ -38,16 +39,18 @@ public class CheckPermissionAspect {
 
         CheckPermissionAnno checkPermissionAnno = method.getAnnotation(CheckPermissionAnno.class);
         String uri = checkPermissionAnno.uri();
+        String scope = checkPermissionAnno.scope();
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         String tokenRequest = TokenUtil.getTokenFromRequest(request);
         try{
-            ResponseData<CheckPermissionResponseDTO> response = userClient.checkPermission(tokenRequest, uri);
+            ResponseData<CheckPermissionResponseDTO> response = userClient.checkPermission(tokenRequest, uri, scope);
             CheckPermissionResponseDTO result = response.getData();
             System.out.println("Status check permission: " + result.isResult() + result.getUserId());
             if(!result.isResult()){
                 throw new AccessDeniedException("");
             }
+
         }catch (RetryableException e){
             throw new HttpClientErrorException(HttpStatus.REQUEST_TIMEOUT);
         }catch (FeignException ex){

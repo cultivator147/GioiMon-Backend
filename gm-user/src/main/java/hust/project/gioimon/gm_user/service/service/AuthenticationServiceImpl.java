@@ -52,15 +52,12 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         String password = rqDTO.password;
         return login(username, password);
     }
-    private LoginResponseDTO login(String username, String password) {
+    private LoginResponseDTO login(String username, String password){
         User user = userInfoRepository.findByUsername(username);
-        //TODO: AUTHEN HERE
-        //TODO: GENERATE Token:
-        String token = JWTCreator.getInstance().sign(new TokenElements(user.getId(), user.getUsername(), 1, System.currentTimeMillis() + 24*60*60*1000));
+        String token = JWTCreator.getInstance().sign(new TokenElements(user.getId(), user.getUsername(), user.getRole(), System.currentTimeMillis() + 24 * 60 * 60 * 1000));
         System.out.println("token signed: " + token);
         user.setAccessToken(token);
         userInfoRepository.save(user);
-        LoginResponseDTO loginResponseDTO = UserConverter.toDTO(user);
-        return loginResponseDTO;
+        return UserConverter.toDTO(user);
     }
 }

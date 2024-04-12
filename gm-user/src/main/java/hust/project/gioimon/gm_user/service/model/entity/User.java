@@ -27,4 +27,6 @@ public class User {
     private Long tokExpTime;
     @Column
     private Integer status;
+    @Column
+    private Integer role;
 }

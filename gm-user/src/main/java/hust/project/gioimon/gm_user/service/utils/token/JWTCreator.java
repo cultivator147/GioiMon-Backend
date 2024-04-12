@@ -1,55 +1,45 @@
 package hust.project.gioimon.gm_user.service.utils.token;
 
 import io.jsonwebtoken.*;
+import lombok.Getter;
 
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
 
 public class JWTCreator {
 
-    private static final String SIGNATURE = "GM_TOKEN_SIGNATURE_Hh1407";
-
+    private static final String GM_SIGNATURE_ORIGIN = "GM_TOKEN_SIGNATURE_Hh140720020706052005@#!";
+    private static final String GM_SIGNATURE = "R01fVE9LRU5fU0lHTkFUVVJFX0hoMTQwNzIwMDIwNzA2MDUyMDA1QCMh";
     private JWTCreator() {
 
     }
 
+    @Getter
     private static final JWTCreator instance = new JWTCreator();
 
-    public static JWTCreator getInstance() {
-        return instance;
-    }
-
     public String sign(TokenElements tokenElement) {
-        JwtBuilder builder = Jwts.builder();
-        ClaimsBuilder claimsBuilder = Jwts.claims();
-        claimsBuilder.add(TokenElements.USER_ID_KEY, tokenElement.getUserId());
-//        ClaimsBuilder claimsBuilder = Jwts.builder().claims(TokenElements.USER_ID_KEY, tokenElement.getUserId());
-//        claimsBuilder.add(TokenElements.USER_ID_KEY, tokenElement.getUserId());
-//
-//        Claims claims = claimsBuilder.build();
-//        JwtBuilder jwtBuilder = Jwts.builder();
-//        jwtBuilder.claims(claims);
-//        jwtBuilder.signWith(SignatureAlgorithm.ES256, SIGNATURE);
-        return builder.claims(claimsBuilder.build()).compact();
+        return Jwts.builder()
+                .setSubject(tokenElement.getUserId().toString())
+                .claim(TokenElements.ACCOUNT_ROLE_KEY, tokenElement.getRole())
+                .claim(TokenElements.EXPIRATION_TIME, tokenElement.getExpirationTime())
+                .signWith(SignatureAlgorithm.HS256, GM_SIGNATURE)
+                .compact();
     }
 
-    public TokenElements parse(String token) throws Exception {
+    public TokenElements parse(String token){
         TokenElements tokenElement = null;
         try {
-            SignatureAlgorithm sa = SignatureAlgorithm.ES256;
-            SecretKey secretKey = new SecretKeySpec(SIGNATURE.getBytes(StandardCharsets.UTF_8), sa.getJcaName());
             JwtParserBuilder parser = Jwts.parser();
-            parser.decryptWith(secretKey);
-
-//            JwtParser parser = Jwts.parser();
-            Claims body = parser.build().parseEncryptedClaims(token).getPayload();
-            Long userId = (Long) body.get(TokenElements.USER_ID_KEY);
+            parser.setSigningKey(GM_SIGNATURE);
+            Claims body = parser.build().parseClaimsJws(token).getPayload();
+            Long userId = Long.parseLong(body.getSubject());
+            Integer role = (Integer) body.get(TokenElements.ACCOUNT_ROLE_KEY);
+            Long expirationTime = (Long)body.get(TokenElements.EXPIRATION_TIME);
             return TokenElements.builder()
                     .userId(userId)
+                    .expirationTime(expirationTime)
+                    .role(role)
                     .build();
         } catch (Exception ex) {
-            throw new Exception("Error parsing token: "+ ex);
+            throw new RuntimeException("Error parsing token: "+ ex);
         }
     }
 }

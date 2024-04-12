@@ -34,6 +34,7 @@
       <module name="gm-gateway" options="-parameters" />
       <module name="gm-post" options="-parameters" />
       <module name="gm-story" options="-parameters" />
+      <module name="gm-user" options="-parameters" />
       <module name="service" options="-parameters" />
       <module name="service (1)" options="-parameters" />
       <module name="service (2)" options="-parameters" />
