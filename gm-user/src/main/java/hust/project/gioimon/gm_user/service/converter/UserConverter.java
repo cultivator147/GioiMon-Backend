@@ -12,7 +12,7 @@ public class UserConverter{
         LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
         loginResponseDTO.setUsername(user.getUsername());
         loginResponseDTO.setId(user.getId());
-        loginResponseDTO.setToken(user.getAccessToken());
+        loginResponseDTO.setAccessToken(user.getAccessToken());
 //        loginResponseDTO.setStatus(user.getStatus());
 //        loginResponseDTO.setRoles(user.getRoles());
         return loginResponseDTO;
