@@ -3,6 +3,7 @@ package hust.project.gioimon.gm_user.service.service;
 import hust.project.gioimon.gm_user.service.converter.UserConverter;
 import hust.project.gioimon.gm_user.service.model.dto.request.LoginRequestDTO;
 import hust.project.gioimon.gm_user.service.model.dto.response.LoginResponseDTO;
+import hust.project.gioimon.gm_user.service.model.entity.Profile;
 import hust.project.gioimon.gm_user.service.model.entity.User;
 import hust.project.gioimon.gm_user.service.repository.jdbc.UserRepository;
 import hust.project.gioimon.gm_user.service.repository.jpa.UserInfoRepository;
@@ -21,7 +22,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     @Autowired
     private final UserInfoRepository userInfoRepository;
     private final UserRepository userRepository;
-
+    private final ProfileService profileService;
     @Override
     public LoginResponseDTO register(LoginRequestDTO rqDTO) {
         String username = rqDTO.getUsername();
@@ -44,7 +45,12 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         userEntity.setTokExpTime(now + 7 * 24 * 3600000);
         userEntity.setStatus(status);
         userInfoRepository.save(userEntity);
-        return login(username, password);
+        LoginResponseDTO response = login(username, password);
+        // Create new profile
+        Profile p = new Profile();
+        p.setUserId(response.getId());
+        profileService.update(response.getId(), p);
+        return response;
     }
     @Override
     public LoginResponseDTO login(LoginRequestDTO rqDTO) {
