@@ -1,12 +1,16 @@
 package hust.project.gioimon.gm_post.service.model.entity;
 
+import hust.project.gioimon.gm_post.service.converter.StringListConverter;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,7 +27,8 @@ public class Profile {
     private String avatar;
     private String dateOfBirth;
     private String zodiac;
-    private String gender;
+    @Convert(converter = StringListConverter.class)
+    private List<String> gender;
     private String introduction;
     private boolean onboard;
     private String location;
