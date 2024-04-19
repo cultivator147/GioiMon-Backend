@@ -23,8 +23,6 @@ public class Post {
     private Long id;
     @Column(name = "owner_id")
     private Long ownerId;
-    private String ownerAvatar;
-    private String ownerNickname;
     @Column(name = "story_id")
     private Long storyId;
     @Column(name = "title")

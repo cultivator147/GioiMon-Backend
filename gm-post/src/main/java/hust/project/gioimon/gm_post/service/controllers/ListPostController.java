@@ -1,6 +1,7 @@
 package hust.project.gioimon.gm_post.service.controllers;
 
 import hust.project.gioimon.gm_post.client.model.ResponseData;
+import hust.project.gioimon.gm_post.service.model.dto.response.PostResponseDTO;
 import hust.project.gioimon.gm_post.service.model.entity.Post;
 import hust.project.gioimon.gm_post.service.service.ListPostService;
 import hust.project.gioimon.gm_post.service.utils.BaseResponse;
@@ -18,9 +19,9 @@ import java.util.List;
 public class ListPostController {
     private final ListPostService listPostService;
     @GetMapping("/")
-    public ResponseEntity<ResponseData<List<Post>>> getPostPagination(HttpServletRequest request,
-                                                                      @RequestParam(name = "page", defaultValue = "0") int page,
-                                                                      @RequestParam(name = "size", defaultValue = "5") int size)
+    public ResponseEntity<ResponseData<List<PostResponseDTO>>> getPostPagination(HttpServletRequest request,
+                                                                                 @RequestParam(name = "page", defaultValue = "0") int page,
+                                                                                 @RequestParam(name = "size", defaultValue = "5") int size)
     {
         return BaseResponse.success(listPostService.getListPost(page, size));
     }

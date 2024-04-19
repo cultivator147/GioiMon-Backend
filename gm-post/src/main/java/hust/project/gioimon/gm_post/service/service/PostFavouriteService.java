@@ -41,6 +41,9 @@ public class PostFavouriteService {
         postService.updateFavInteraction(postId, favCount(postId), averageFavPoint(postId));
         return postService.getPost(postId);
     }
+    public PostFavourite get(Long userId, Long postId){
+        return postFavRepository.findById(new PostFavCompositeKey(postId, userId)).orElse(new PostFavourite());
+    }
 
     public double averageFavPoint(long postId) {
         return postFavRepository.getTotalPoint(postId);

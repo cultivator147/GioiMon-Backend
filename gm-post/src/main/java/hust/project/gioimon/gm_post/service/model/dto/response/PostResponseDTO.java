@@ -13,4 +13,6 @@ import lombok.Setter;
 public class PostResponseDTO extends Post {
     private String ownerAvatar;
     private String ownerNickname;
+    private Integer favourited;
+    private Integer favouritePoint;
 }
