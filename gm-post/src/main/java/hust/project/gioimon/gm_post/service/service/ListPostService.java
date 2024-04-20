@@ -24,14 +24,14 @@ public class ListPostService {
     private final ListPostRepository listPostRepository;
     private final PostFavouriteService postFavouriteService;
     private final UserClient userClient;
-    public List<PostResponseDTO> getListPost(int page, int slots){
+    public List<PostResponseDTO> getListPost(Long userId, int page, int slots){
         Pageable pageable = PageRequest.of(page, slots, Sort.by(Sort.Direction.DESC, "createTime"));
         List<Post> listPostEntity = listPostRepository
                 .findAll(pageable)
                 .stream().toList();
         List<PostResponseDTO> results = new ArrayList<>();
         for(Post p : listPostEntity){
-            PostFavourite pf = postFavouriteService.get(p.getOwnerId(), p.getId());
+            PostFavourite pf = postFavouriteService.get(userId, p.getId());
             PostResponseDTO postResponseDTO = PostConverter.toResponseDTO(p);
             postResponseDTO.setFavourited(pf.getFavourite());
             postResponseDTO.setFavouritePoint(pf.getFavouritePoint());

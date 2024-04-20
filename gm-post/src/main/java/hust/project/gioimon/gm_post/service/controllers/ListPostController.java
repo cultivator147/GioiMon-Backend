@@ -5,6 +5,7 @@ import hust.project.gioimon.gm_post.service.model.dto.response.PostResponseDTO;
 import hust.project.gioimon.gm_post.service.model.entity.Post;
 import hust.project.gioimon.gm_post.service.service.ListPostService;
 import hust.project.gioimon.gm_post.service.utils.BaseResponse;
+import hust.project.gioimon.gm_post.service.utils.token.TokenUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ public class ListPostController {
                                                                                  @RequestParam(name = "page", defaultValue = "0") int page,
                                                                                  @RequestParam(name = "size", defaultValue = "5") int size)
     {
-        return BaseResponse.success(listPostService.getListPost(page, size));
+        Long userId = TokenUtil.getUserIdFromRequest(request);
+        return BaseResponse.success(listPostService.getListPost(userId, page, size));
     }
 }

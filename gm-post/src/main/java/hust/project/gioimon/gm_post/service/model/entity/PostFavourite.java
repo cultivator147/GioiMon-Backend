@@ -15,11 +15,11 @@ import lombok.Setter;
 @IdClass(PostFavCompositeKey.class)
 public class PostFavourite {
     @Id
-    @Column(name = "user_id")
-    private Long userId;
-    @Id
     @Column(name = "post_id")
     private Long postId;
+    @Id
+    @Column(name = "user_id")
+    private Long userId;
     @Column(name = "favourite")
     private int favourite;
     @Column(name = "favourite_point")

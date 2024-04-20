@@ -7,11 +7,13 @@ services:
       - ./eureka-server/target:/var/app/gm
     ports:
       - "8761:8761"
+      - "7761:7761"
     networks:
       - gm-net
     working_dir: /var/app/gm
     entrypoint:
       - java
+      - "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:7761"
       - -jar
       - eureka-server-0.0.1-SNAPSHOT.jar
   gm-story:
@@ -21,6 +23,7 @@ services:
       - ./gm-story/target:/var/app/gm
     ports:
       - "8803:8803"
+      - "7803:7803"
     restart: always
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://54.153.185.93:3306/gm_stories
@@ -30,6 +33,7 @@ services:
       EUREKA_URI: http://eureka-server:8761/eureka
     entrypoint:
       - java
+      - "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:7803"
       - -jar
       - gm-story-0.0.1-SNAPSHOT.jar
     networks:
@@ -44,6 +48,7 @@ services:
     container_name: gm-user
     ports:
       - "8801:8801"
+      - "7801:7801"
     restart: always
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://54.153.185.93:3306/gm_users
@@ -58,6 +63,7 @@ services:
       - eureka-server
     entrypoint:
       - java
+      - "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:7801"
       - -jar
       - gm-user-0.0.1-SNAPSHOT.jar
   gm-post:
@@ -67,6 +73,7 @@ services:
       - ./gm-post/target:/var/app/gm
     ports:
       - "8802:8802"
+      - "7802:7802"
     restart: always
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://54.153.185.93:3306/gm_post
@@ -83,6 +90,7 @@ services:
       - gm-user
     entrypoint:
       - java
+      - "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:7802"
       - -jar
       - gm-post-0.0.1-SNAPSHOT.jar
   gm_gateway:
@@ -92,6 +100,7 @@ services:
       - ./gm-gateway/target:/var/app/gm
     ports:
       - "10440:10440"
+      - "9440:9440"
     environment:
       EUREKA_URI: http://eureka-server:8761/eureka
       USER_ID: gm-user
@@ -110,6 +119,7 @@ services:
       - gm-post
     entrypoint:
       - java
+      - "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:9440"
       - -jar
       - gm-gateway-0.0.1-SNAPSHOT.jar
 networks:
