@@ -85,7 +85,7 @@ public class ListStoriesRepository extends BaseRepository {
                 .append(" WHERE S.title LIKE '%").append(keyword).append("%'")
                 .append(" OR S.keyword LIKE '%").append(keyword).append("%' ) T1 ")
                 .append(" JOIN categories C ON T1.CATEGORY_ID = C.ID")
-                .append(" GROUP BY ID");
+                .append(" GROUP BY ID, TITLE, LINK, PICTURE, CATEGORY_ID, LAST_UPDATE_DATE");
         Map<String, Object> params = new HashMap<>();
         Page<SampleStoryDTO> sampleStoryDTOS = getPage(sqlBuilder.toString(), params, page, size, SampleStoryDTO.class);
         sampleStoryDTOS.stream().forEach(story -> story.setChapters(chaptersRepository.getListChapters(story.getId(), 0, 3)));
