@@ -26,7 +26,7 @@ services:
       - "7803:7803"
     restart: always
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1:3306/gm_stories
+      SPRING_DATASOURCE_URL: jdbc:mysql://13.54.178.109:3306/gm_stories
       SPRING_DATASOURCE_USERNAME: gm
       SPRING_DATASOURCE_PASSWORD: 1234
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
@@ -51,7 +51,7 @@ services:
       - "7801:7801"
     restart: always
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1:3306/gm_users
+      SPRING_DATASOURCE_URL: jdbc:mysql://13.54.178.109:3306/gm_users
       SPRING_DATASOURCE_USERNAME: gm
       SPRING_DATASOURCE_PASSWORD: 1234
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
@@ -76,7 +76,7 @@ services:
       - "7802:7802"
     restart: always
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1:3306/gm_post
+      SPRING_DATASOURCE_URL: jdbc:mysql://13.54.178.109:3306/gm_post
       SPRING_DATASOURCE_USERNAME: gm
       SPRING_DATASOURCE_PASSWORD: 1234
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
