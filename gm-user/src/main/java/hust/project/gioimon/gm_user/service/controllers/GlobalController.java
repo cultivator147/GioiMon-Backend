@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/v1.0/global")
 @RequiredArgsConstructor
-@CrossOrigin("http://localhost:3000")
 public class GlobalController {
     private final GlobalService globalService;
     @GetMapping(value = "/check-permission")

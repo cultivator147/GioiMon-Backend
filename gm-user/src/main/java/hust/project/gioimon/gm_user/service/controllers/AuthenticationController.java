@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/v1.0/auth")
 @RequiredArgsConstructor
-@CrossOrigin("http://localhost:3000")
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)

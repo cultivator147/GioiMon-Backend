@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/v1.0/story/")
 @Slf4j
 @RequiredArgsConstructor
-@CrossOrigin("http://localhost:3000")
 public class StoryController {
     private final StoryService storyService;
     @GetMapping("/detail")

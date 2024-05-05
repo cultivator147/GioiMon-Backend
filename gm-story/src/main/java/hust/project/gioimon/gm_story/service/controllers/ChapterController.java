@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1.0/chapter/")
 @Slf4j
 @RequiredArgsConstructor
-@CrossOrigin("http://localhost:3000")
 public class ChapterController {
     private final ChapterService chapterService;
 

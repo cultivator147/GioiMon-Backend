@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/v1.0/user/profile")
 @RequiredArgsConstructor
-@CrossOrigin("http://localhost:3000")
 public class ProfileController {
     private final ProfileService profileService;
     @PostMapping("")

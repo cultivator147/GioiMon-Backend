@@ -23,7 +23,6 @@ import static hust.project.gioimon.gm_post.service.utils.token.TokenUtil.getUser
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1.0/post")
-@CrossOrigin("http://localhost:3000")
 public class PostController {
     private final PostService postService;
     private final PostFavouriteService postFavouriteService;
