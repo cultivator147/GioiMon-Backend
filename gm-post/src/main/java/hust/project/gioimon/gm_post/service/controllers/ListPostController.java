@@ -18,12 +18,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ListPostController {
     private final ListPostService listPostService;
+
     @GetMapping("/")
     public ResponseEntity<ResponseData<List<PostResponseDTO>>> getPostPagination(HttpServletRequest request,
                                                                                  @RequestParam(name = "page", defaultValue = "0") int page,
-                                                                                 @RequestParam(name = "size", defaultValue = "5") int size)
-    {
+                                                                                 @RequestParam(name = "size", defaultValue = "5") int size,
+                                                                                 @RequestParam(name = "friend_id") Long friendId) {
         Long userId = TokenUtil.getUserIdFromRequest(request);
-        return BaseResponse.success(listPostService.getListPost(userId, page, size));
+        if(friendId == null){
+            friendId = userId;
+        }
+        return BaseResponse.success(listPostService.getListPost(userId, friendId, page, size));
     }
 }
