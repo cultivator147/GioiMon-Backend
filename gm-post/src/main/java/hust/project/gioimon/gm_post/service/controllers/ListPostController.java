@@ -23,9 +23,9 @@ public class ListPostController {
     public ResponseEntity<ResponseData<List<PostResponseDTO>>> getPostPagination(HttpServletRequest request,
                                                                                  @RequestParam(name = "page", defaultValue = "0") int page,
                                                                                  @RequestParam(name = "size", defaultValue = "5") int size,
-                                                                                 @RequestParam(name = "friend_id") Long friendId) {
+                                                                                 @RequestParam(name = "friend_id", defaultValue = "0") Long friendId) {
         Long userId = TokenUtil.getUserIdFromRequest(request);
-        if(friendId == null){
+        if(friendId == 0){
             friendId = userId;
         }
         return BaseResponse.success(listPostService.getListPost(userId, friendId, page, size));
