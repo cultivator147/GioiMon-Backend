@@ -26,11 +26,19 @@ public class ListPostService {
     private final UserClient userClient;
     public List<PostResponseDTO> getListPost(Long userId,Long friendId, int page, int slots){
         Pageable pageable = PageRequest.of(page, slots, Sort.by(Sort.Direction.DESC, "createTime"));
-        List<Post> listPostEntity = listPostRepository
-                .findAll(pageable)
-                .stream()
-                .filter(p -> p.getOwnerId().equals(friendId))
-                .toList();
+        List<Post> listPostEntity;
+        if(friendId.equals(userId)){
+            listPostEntity = listPostRepository
+                    .findAll(pageable)
+                    .stream()
+                    .toList();
+        }else{
+            listPostEntity = listPostRepository
+                    .findAll(pageable)
+                    .stream()
+                    .filter(p -> p.getOwnerId().equals(friendId))
+                    .toList();
+        }
         List<PostResponseDTO> results = new ArrayList<>();
         for(Post p : listPostEntity){
             PostFavourite pf = postFavouriteService.get(userId, p.getId());
