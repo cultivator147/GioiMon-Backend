@@ -1,5 +1,18 @@
 version: "3.7"
 services:
+  mysql:
+    build: mysql
+    image: mysql:latest
+    container_name: mysql
+    restart: always
+    networks:
+      - gm-net
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
   eureka-server:
     image: openjdk:17-jdk-slim
     container_name: eureka-server
@@ -26,8 +39,8 @@ services:
       - "7803:7803"
     restart: always
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://54.252.244.31:3306/gm_stories
-      SPRING_DATASOURCE_USERNAME: gm
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/gm_stories
+      SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 1234
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
       EUREKA_URI: http://eureka-server:8761/eureka
@@ -40,6 +53,7 @@ services:
       - gm-net
     working_dir: /var/app/gm
     depends_on:
+      - mysql
       - eureka-server
   gm-user:
     image: openjdk:17-jdk-slim
@@ -51,8 +65,8 @@ services:
       - "7801:7801"
     restart: always
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://54.252.244.31:3306/gm_users
-      SPRING_DATASOURCE_USERNAME: gm
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/gm_users
+      SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 1234
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
       EUREKA_URI: http://eureka-server:8761/eureka
@@ -61,6 +75,7 @@ services:
     working_dir: /var/app/gm
     depends_on:
       - eureka-server
+      - mysql
     entrypoint:
       - java
       - "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:7801"
@@ -76,8 +91,8 @@ services:
       - "7802:7802"
     restart: always
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://54.252.244.31:3306/gm_post
-      SPRING_DATASOURCE_USERNAME: gm
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/gm_post
+      SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 1234
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
       EUREKA_URI: http://eureka-server:8761/eureka
@@ -88,6 +103,7 @@ services:
       - eureka-server
       - gm-story
       - gm-user
+      - mysql
     entrypoint:
       - java
       - "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:7802"
