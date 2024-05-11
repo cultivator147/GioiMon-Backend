@@ -18,6 +18,7 @@ services:
     container_name: eureka-server
     volumes:
       - ./eureka-server/target:/var/app/gm
+    restart: always
     ports:
       - "8761:8761"
       - "7761:7761"
@@ -117,6 +118,7 @@ services:
     ports:
       - "10440:10440"
       - "9440:9440"
+    restart: always
     environment:
       EUREKA_URI: http://eureka-server:8761/eureka
       USER_ID: gm-user
