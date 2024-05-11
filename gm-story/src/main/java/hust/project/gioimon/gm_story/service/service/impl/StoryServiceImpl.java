@@ -41,10 +41,12 @@ public class StoryServiceImpl implements StoryService {
         String[] images =  chapterService.getImages(storyId, chapterNumber);
         String title = storyRepository.getTitle(storyId);
         long quantity = chapterService.getQuantity(storyId);
+        List<ChapterDTO> chapters = chapterService.getAll(storyId);
         ContentDTO contentDTO = new ContentDTO();
         contentDTO.setChapterQuantity(quantity);
         contentDTO.setTitle(title);
         contentDTO.setImages(images);
+        contentDTO.setChapters(chapters);
         return contentDTO;
     }
     @Override
