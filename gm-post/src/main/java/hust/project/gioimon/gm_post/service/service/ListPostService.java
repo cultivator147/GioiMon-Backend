@@ -4,6 +4,7 @@ import hust.project.gioimon.gm_post.client.feign_client.UserClient;
 import hust.project.gioimon.gm_post.service.converter.PostConverter;
 import hust.project.gioimon.gm_post.service.model.dto.response.PostResponseDTO;
 import hust.project.gioimon.gm_post.service.model.entity.Post;
+import hust.project.gioimon.gm_post.service.model.entity.PostComment;
 import hust.project.gioimon.gm_post.service.model.entity.PostFavourite;
 import hust.project.gioimon.gm_post.service.model.entity.Profile;
 import hust.project.gioimon.gm_post.service.repository.jpa.ListPostRepository;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 public class ListPostService {
     private final ListPostRepository listPostRepository;
     private final PostFavouriteService postFavouriteService;
+    private final PostCommentService postCommentService;
     private final UserClient userClient;
     public List<PostResponseDTO> getListPost(Long userId,Long friendId, int page, int slots){
         Pageable pageable = PageRequest.of(page, slots, Sort.by(Sort.Direction.DESC, "createTime"));
@@ -45,6 +47,7 @@ public class ListPostService {
             PostResponseDTO postResponseDTO = PostConverter.toResponseDTO(p);
             postResponseDTO.setFavourited(pf.getFavourite());
             postResponseDTO.setFavouritePoint(pf.getFavouritePoint());
+            postResponseDTO.setCommentCount(postCommentService.getCommentCount(p.getId()));
             results.add(postResponseDTO);
         }
         results.forEach(this::setOwnerInformation);

@@ -5,8 +5,11 @@ import hust.project.gioimon.gm_post.client.model.ResponseData;
 import hust.project.gioimon.gm_post.client.utils.Scope;
 import hust.project.gioimon.gm_post.service.model.dto.request.CreatePostDTO;
 import hust.project.gioimon.gm_post.service.model.dto.request.GetDetailPostDTO;
+import hust.project.gioimon.gm_post.service.model.dto.request.PostCommentDTO;
+import hust.project.gioimon.gm_post.service.model.dto.response.CommentResponseDTO;
 import hust.project.gioimon.gm_post.service.model.entity.Post;
 import hust.project.gioimon.gm_post.service.model.entity.PostFavourite;
+import hust.project.gioimon.gm_post.service.service.PostCommentService;
 import hust.project.gioimon.gm_post.service.service.PostFavouriteService;
 import hust.project.gioimon.gm_post.service.service.PostService;
 import hust.project.gioimon.gm_post.service.utils.BaseResponse;
@@ -43,4 +46,5 @@ public class PostController {
         Long userId = TokenUtil.getUserIdFromRequest(request);
         return BaseResponse.success(postFavouriteService.favouritePost(userId, body));
     }
+
 }

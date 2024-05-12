@@ -1,6 +1,9 @@
 package hust.project.gioimon.gm_post.service.service;
 
+import hust.project.gioimon.gm_post.service.converter.CommentConverter;
+import hust.project.gioimon.gm_post.service.model.dto.request.PostCommentDTO;
 import hust.project.gioimon.gm_post.service.model.entity.Post;
+import hust.project.gioimon.gm_post.service.model.entity.PostComment;
 import hust.project.gioimon.gm_post.service.model.entity.PostFavCompositeKey;
 import hust.project.gioimon.gm_post.service.model.entity.PostFavourite;
 import hust.project.gioimon.gm_post.service.repository.jpa.PostFavRepository;
@@ -41,6 +44,7 @@ public class PostFavouriteService {
         postService.updateFavInteraction(postId, favCount(postId), averageFavPoint(postId));
         return postService.getPost(postId);
     }
+
     public PostFavourite get(Long userId, Long postId){
         return postFavRepository.findById(new PostFavCompositeKey(postId, userId)).orElse(new PostFavourite());
     }
