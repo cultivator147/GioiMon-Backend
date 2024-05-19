@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,17 +27,15 @@ public class ListPostService {
     private final PostFavouriteService postFavouriteService;
     private final PostCommentService postCommentService;
     private final UserClient userClient;
-    public List<PostResponseDTO> getListPost(Long userId,Long friendId, int page, int slots){
-        Pageable pageable = PageRequest.of(page, slots, Sort.by(Sort.Direction.DESC, "createTime"));
+    public List<PostResponseDTO> getListPost(Long userId,Long friendId, int page, int slots, int filterByFiled, int favouriteStatus, Long storyId){
+//        Pageable pageable = PageRequest.of(page, slots, Sort.by(Sort.Direction.DESC, "createTime"));
         List<Post> listPostEntity;
         if(friendId.equals(userId)){
             listPostEntity = listPostRepository
-                    .findAll(pageable)
-                    .stream()
-                    .toList();
+                    .findAll();
         }else{
             listPostEntity = listPostRepository
-                    .findAll(pageable)
+                    .findAll()
                     .stream()
                     .filter(p -> p.getOwnerId().equals(friendId))
                     .toList();
@@ -51,7 +50,45 @@ public class ListPostService {
             results.add(postResponseDTO);
         }
         results.forEach(this::setOwnerInformation);
+        results = results.stream()
+                .filter(p -> filterByStory(p, storyId))
+                .filter(p -> filterByField(p,filterByFiled))
+                .filter(p -> filterByFavouriteStatus(p, favouriteStatus))
+                .skip((long) page * slots)
+                .limit(slots)
+                .collect(Collectors.toList())
+        ;
         return results;
+    }
+    private boolean filterByStory(PostResponseDTO post, Long storyId){
+        if(storyId == null || storyId == 0){
+            return true;
+        }
+        return Objects.equals(post.getStoryId(), storyId);
+    }
+    private boolean filterByField(PostResponseDTO post, int filterBy){
+        if(filterBy == 0){
+            return true;
+        }
+        if(filterBy == 1){
+            return true;
+        }
+        if(filterBy == 2){
+            return true;
+        }
+        return true;
+    }
+    private boolean filterByFavouriteStatus(PostResponseDTO post, int status){
+        if(status == 0){
+            return true;
+        }
+        if(status == 1){
+            return post.getFavourited() == 1;
+        }
+        if(status == 2){
+            return post.getFavourited() == 0;
+        }
+        return true;
     }
     private void setOwnerInformation(PostResponseDTO post){
         Profile p = userClient.getProfile(new Profile(post.getOwnerId())).getData();
