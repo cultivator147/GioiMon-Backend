@@ -26,13 +26,11 @@ public class ListPostController {
                                                                                  @RequestParam(name = "friend_id", defaultValue = "0") Long friendId,
                                                                                  @RequestParam(name = "filterBy", defaultValue = "0") Integer filterByField,
                                                                                  @RequestParam(name = "favouriteStatus", defaultValue = "0") Integer favouriteStatus,
-                                                                                 @RequestParam(name = "storyId", defaultValue = "0") Long storyId
+                                                                                 @RequestParam(name = "storyId", defaultValue = "0") Long storyId,
+                                                                                 @RequestParam(name = "sortBy", defaultValue = "0") Integer sortBy
 
     ) {
         Long userId = TokenUtil.getUserIdFromRequest(request);
-        if(friendId == 0){
-            friendId = userId;
-        }
-        return BaseResponse.success(listPostService.getListPost(userId, friendId, page, size, filterByField, favouriteStatus, storyId));
+        return BaseResponse.success(listPostService.getListPost(userId, friendId, page, size, filterByField, favouriteStatus, storyId, sortBy));
     }
 }

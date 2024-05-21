@@ -1,6 +1,7 @@
 package hust.project.gioimon.gm_post.service.service;
 
 import hust.project.gioimon.gm_post.client.feign_client.UserClient;
+import hust.project.gioimon.gm_post.service.cache.ListPostCache;
 import hust.project.gioimon.gm_post.service.converter.PostConverter;
 import hust.project.gioimon.gm_post.service.model.dto.response.PostResponseDTO;
 import hust.project.gioimon.gm_post.service.model.entity.Post;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -27,10 +29,13 @@ public class ListPostService {
     private final PostFavouriteService postFavouriteService;
     private final PostCommentService postCommentService;
     private final UserClient userClient;
-    public List<PostResponseDTO> getListPost(Long userId,Long friendId, int page, int slots, int filterByFiled, int favouriteStatus, Long storyId){
-//        Pageable pageable = PageRequest.of(page, slots, Sort.by(Sort.Direction.DESC, "createTime"));
+    public List<PostResponseDTO> getListPost(Long userId,Long friendId, int page,
+                                             int slots, int filterByFiled,
+                                             int favouriteStatus, Long storyId, int sortBy){
         List<Post> listPostEntity;
-        if(friendId.equals(userId)){
+
+        Comparator<Post> comparatorSortBy = (o1, o2) -> (int) (o1.getCreateTime() - o2.getCreateTime());
+        if(friendId.equals(0L)){
             listPostEntity = listPostRepository
                     .findAll();
         }else{
@@ -40,6 +45,7 @@ public class ListPostService {
                     .filter(p -> p.getOwnerId().equals(friendId))
                     .toList();
         }
+        listPostEntity = listPostEntity.stream().sorted(sortBy == 2 ? comparatorSortBy : comparatorSortBy.reversed()).collect(Collectors.toList());
         List<PostResponseDTO> results = new ArrayList<>();
         for(Post p : listPostEntity){
             PostFavourite pf = postFavouriteService.get(userId, p.getId());
@@ -49,7 +55,6 @@ public class ListPostService {
             postResponseDTO.setCommentCount(postCommentService.getCommentCount(p.getId()));
             results.add(postResponseDTO);
         }
-        results.forEach(this::setOwnerInformation);
         results = results.stream()
                 .filter(p -> filterByStory(p, storyId))
                 .filter(p -> filterByField(p,filterByFiled))
@@ -58,6 +63,7 @@ public class ListPostService {
                 .limit(slots)
                 .collect(Collectors.toList())
         ;
+        results.forEach(this::setOwnerInformation);
         return results;
     }
     private boolean filterByStory(PostResponseDTO post, Long storyId){
