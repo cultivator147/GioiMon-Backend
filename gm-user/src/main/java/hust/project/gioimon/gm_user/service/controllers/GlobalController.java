@@ -19,7 +19,6 @@ public class GlobalController {
     @GetMapping(value = "/check-permission")
     public ResponseEntity<ResponseData<CheckPermissionResponseDTO>> checkPermission(HttpServletRequest request, @RequestParam String uri, @RequestParam String scope){
         String token = TokenUtil.getTokenFromRequest(request);
-        System.out.println(token);
         return BaseResponse.success(globalService.checkPermission(token, uri, scope));
     }
 }

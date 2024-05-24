@@ -1,0 +1,10 @@
+
+V
+java:S3516K"9Refactor this method to not always return the same value.(äù‰Ò8âü™ýù1
+~	java:S107 "<Method has 8 parameters, which is greater than 7 authorized.(ôöô8‘¹Œýù1J$f087c17a-653d-43b1-b988-213798ea3d56
+—
+java:S62040"zReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()' and ensure that the list is unmodified.(äÛš²8ëü™ýù1
+H
+java:S1172K"+Remove this unused method parameter "post".(äù‰Ò8ñü™ýù1
+^
+java:S1126R"AReplace this if-then-else statement by a single return statement.(ÜÀœ8òü™ýù1

@@ -47,5 +47,18 @@ public class UserRepository extends BaseRepository {
         if (rpDTO == null) throw new UserDoesNotExistException("USER DOES NOT EXIST");
         return rpDTO;
     }
-
+    public Long getUserCoin(Long userId){
+        String sql = "SELECT coin FROM users WHERE ID = :ID";
+        Map<String, Object> params = new HashMap<>();
+        params.put("ID", userId);
+        return queryForObject(sql, params, Long.class);
+    }
+    public Long updateUserCoin(Long userId, Long point){
+        String sql = "UPDATE users SET coin = :COIN WHERE ID = :ID";
+        Map<String, Object> params = new HashMap<>();
+        params.put("COIN", point);
+        params.put("ID", userId);
+        executeSqlDatabase(sql, params);
+        return point;
+    }
 }

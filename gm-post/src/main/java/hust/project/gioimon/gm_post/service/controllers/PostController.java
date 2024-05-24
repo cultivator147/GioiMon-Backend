@@ -33,7 +33,7 @@ public class PostController {
     @PostMapping(value = "/")
     public ResponseEntity<ResponseData<Object>> createPost(HttpServletRequest request, @RequestBody CreatePostDTO createPostDTO){
         Long userId = getUserIdFromRequest(request);
-        postService.createPost(userId, createPostDTO);
+        postService.createPost(TokenUtil.getTokenFromRequest(request), userId, createPostDTO);
         return BaseResponse.success();
     }
     @GetMapping(value = "/")

@@ -29,4 +29,6 @@ public class User {
     private Integer status;
     @Column
     private Integer role;
+    @Column
+    private Long coin;
 }
