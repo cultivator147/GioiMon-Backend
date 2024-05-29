@@ -46,6 +46,14 @@ public class ListStoriesRepository extends BaseRepository {
         results.stream().forEach(story -> story.setChapters(chaptersRepository.getListChapters(story.getId(), 0, 3)));
         return results;
     }
+    public List<SampleStoryDTO> getAll(){
+        StringBuilder sql = new StringBuilder("""
+                    SELECT * FROM stories
+                """);
+        List<SampleStoryDTO> results = getListData(sql.toString(), null, SampleStoryDTO.class);
+        results.stream().forEach(story -> story.setChapters(chaptersRepository.getListChapters(story.getId(), 0, 3)));
+        return results;
+    }
     public List<SampleStoryDTO> topMonthly(){
         StringBuilder sql = new StringBuilder("""
                     SELECT *

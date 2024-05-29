@@ -29,6 +29,6 @@ public class User {
     private Integer status;
     @Column
     private Integer role;
-    @Column
-    private Long coin;
+    @Column(name = "coin", nullable = false, columnDefinition = "bigint default 0")
+    private Long coin = 0L;
 }
