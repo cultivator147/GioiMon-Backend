@@ -47,9 +47,42 @@ public class FilteredListStoriesServiceImpl implements FilteredListStoriesServic
                 return getTopWeekly();
             case "TOP_DAILY":
                 return getTopDaily();
+            case "TOP_ALL":
+                return getTopAll();
+            case "CHAPTERS":
+                return getTopChapters();
+            case "POSTS":
+                return getTopPosts();
             default:
                 return new ArrayList<>();
         }
+    }
+
+    private List<SampleStoryDTO> getTopPosts() {
+        Comparator<SampleStoryDTO> comparator = (o1, o2) -> (int) (o1.getViews() - o2.getViews());
+        return ListStoryCache.LIST_STORIES.stream()
+                .sorted(comparator)
+                .skip(0)
+                .limit(10)
+                .collect(Collectors.toList());
+    }
+
+    private List<SampleStoryDTO> getTopChapters() {
+        Comparator<SampleStoryDTO> comparator = (o1, o2) -> (int) (o1.getViews() - o2.getViews());
+        return ListStoryCache.LIST_STORIES.stream()
+                .sorted(comparator)
+                .skip(0)
+                .limit(10)
+                .collect(Collectors.toList());
+    }
+
+    private List<SampleStoryDTO> getTopAll(){
+        Comparator<SampleStoryDTO> comparator = (o1, o2) -> (int) (o1.getViews() - o2.getViews());
+        return ListStoryCache.LIST_STORIES.stream()
+                .sorted(comparator)
+                .skip(0)
+                .limit(10)
+                .collect(Collectors.toList());
     }
     private List<SampleStoryDTO> getTopMonthly(){
         Long withinTime = System.currentTimeMillis() - Common.ONE_MONTH;
