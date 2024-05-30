@@ -8,41 +8,36 @@ import java.util.List;
 import java.util.Map;
 
 public class ListStoryCache {
-    private static ListStoryCache instance;
-    private ListStoryCache(){
+    public static List<SampleStoryDTO> LIST_STORIES = new ArrayList<>();
 
+    public static void setListStories(List<SampleStoryDTO> listStories){
+        LIST_STORIES = listStories;
     }
-    private static final Map<Long, SampleStoryDTO> listStoryCache = new HashMap<>();
-    public List<SampleStoryDTO> LIST_STORIES = new ArrayList<>();
-    public static ListStoryCache getInstance(){
-        if(instance == null){
-            instance = new ListStoryCache();
-        }
-        return instance;
-    }
-    public List<SampleStoryDTO> getListStoryCache(){
-        return new ArrayList<>(listStoryCache.values());
-    }
-    public static void addStory(SampleStoryDTO story){
-        listStoryCache.put(story.getId(), story);
-    }
-    public static SampleStoryDTO getStory(long id){
-        return listStoryCache.get(id);
-    }
-    public  static void removeStory(long id){
-        listStoryCache.remove(id);
-    }
-    public static void clear(){
-        listStoryCache.clear();
+    public static void updateViews(Long storyId, Long views){
+        LIST_STORIES.forEach(story -> {
+            if(story.getId().equals(storyId)){
+                story.setViews(views);
+            }
+        });
     }
     public static void updateStory(SampleStoryDTO story){
-        listStoryCache.put(story.getId(), story);
+        LIST_STORIES.removeIf(s -> s.getId().equals(story.getId()));
+        LIST_STORIES.add(story);
     }
-    public static boolean contains(long id){
-        return listStoryCache.containsKey(id);
+    public static void addStory(SampleStoryDTO story){
+        LIST_STORIES.add(story);
+    }
+    public static void removeStory(Long id){
+        LIST_STORIES.removeIf(story -> story.getId().equals(id));
+    }
+    public static void clear(){
+        LIST_STORIES.clear();
+    }
+    public static SampleStoryDTO getStory(int index){
+        return LIST_STORIES.get(index);
     }
     public static int size(){
-        return listStoryCache.size();
+        return LIST_STORIES.size();
     }
 
 }

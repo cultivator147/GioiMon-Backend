@@ -15,7 +15,7 @@ public class ChapterDTO {
     private String chapterName;
     private String picture;
     private String[] content;
-    private Date updateDate;
+    private Long updateDate;
     private long views;
     private int scope;
 }

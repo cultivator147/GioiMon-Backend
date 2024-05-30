@@ -13,11 +13,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SampleStoryDTO {
-    private long id;
+    private Long id;
     private String title;
     private String link;
     private String picture;
-    private Date lastUpdateDate;
+    private Long lastUpdateDate;
     private long views;
     private long comments;
     private long loves;

@@ -37,4 +37,10 @@ public class StoryRepository extends BaseRepository{
         executeSqlDatabase(sql, params);
         return new HistoryDTO(storyId, chapterNumber);
     }
+    public Long getViews(Long storyId){
+        String sql = "SELECT SUM(views) FROM stories_chapters WHERE story_id = :storyId";
+        Map<String, Object> params = new HashMap<>();
+        params.put("storyId", storyId);
+        return queryForObject(sql, params, Long.class);
+    }
 }
