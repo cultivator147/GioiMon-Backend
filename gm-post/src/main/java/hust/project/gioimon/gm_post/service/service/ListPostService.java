@@ -108,4 +108,25 @@ public class ListPostService {
             post.setOwnerNickname(p.getNickname());
         }
     }
+
+    public List<PostResponseDTO> getTopFavouritePost(Long userId, int page, int size) {
+        List<Post> listPostEntity = listPostRepository.findAll();
+        List<PostResponseDTO> results = new ArrayList<>();
+        for(Post p : listPostEntity){
+            PostFavourite pf = postFavouriteService.get(userId, p.getId());
+            PostResponseDTO postResponseDTO = PostConverter.toResponseDTO(p);
+            postResponseDTO.setFavourited(pf.getFavourite());
+            postResponseDTO.setFavouritePoint(pf.getFavouritePoint());
+            postResponseDTO.setCommentCount(postCommentService.getCommentCount(p.getId()));
+            results.add(postResponseDTO);
+        }
+        results = results.stream()
+                .sorted((o1, o2) -> (int) (o1.getFavouritePoint() - o2.getFavouritePoint()))
+                .skip((long) page * size)
+                .limit(size)
+                .collect(Collectors.toList())
+        ;
+        results.forEach(this::setOwnerInformation);
+        return results;
+    }
 }

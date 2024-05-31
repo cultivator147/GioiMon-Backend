@@ -4,11 +4,13 @@ services:
     build: mysql
     image: mysql:latest
     container_name: mysql
-    restart: always
+    restart: on-failure
     networks:
       - gm-net
     volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./users.sql:/docker-entrypoint-initdb.d/users.sql
+      - ./story.sql:/docker-entrypoint-initdb.d/story.sql
+      - ./post.sql:/docker-entrypoint-initdb.d/post.sql
     ports:
       - 3307:3306
     environment:
@@ -18,7 +20,7 @@ services:
     container_name: eureka-server
     volumes:
       - ./eureka-server/target:/var/app/gm
-    restart: always
+    restart: no
     ports:
       - "8761:8761"
       - "7761:7761"

@@ -15,6 +15,8 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 -- Dumping structure for table gm_stories.authors
+CREATE DATABASE IF NOT EXISTS `gm_stories` ;
+USE `gm_stories`;
 DROP TABLE IF EXISTS `authors`;
 CREATE TABLE IF NOT EXISTS `authors` (
   `ID` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID author',

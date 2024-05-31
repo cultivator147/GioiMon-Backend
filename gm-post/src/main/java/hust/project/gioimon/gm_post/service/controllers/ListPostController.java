@@ -33,4 +33,13 @@ public class ListPostController {
         Long userId = TokenUtil.getUserIdFromRequest(request);
         return BaseResponse.success(listPostService.getListPost(userId, friendId, page, size, filterByField, favouriteStatus, storyId, sortBy));
     }
+    @GetMapping("/top-favourite")
+    public ResponseEntity<ResponseData<List<PostResponseDTO>>> getTopFavouritePost(HttpServletRequest request,
+                                                                                   @RequestParam(name = "page", defaultValue = "0") int page,
+                                                                                   @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        Long userId = TokenUtil.getUserIdFromRequest(request);
+        return BaseResponse.success(listPostService.getTopFavouritePost(userId, page, size));
+    }
+
 }

@@ -40,22 +40,15 @@ public class FilteredListStoriesServiceImpl implements FilteredListStoriesServic
         return listStoriesRepository.getFilteredListStories(categoryId, 1, page, size, sortBy);
     }
     public List<SampleStoryDTO> leaderboard(String type){
-        switch (type){
-            case "TOP_MONTHLY":
-                return getTopMonthly();
-            case "TOP_WEEKLY":
-                return getTopWeekly();
-            case "TOP_DAILY":
-                return getTopDaily();
-            case "TOP_ALL":
-                return getTopAll();
-            case "CHAPTERS":
-                return getTopChapters();
-            case "POSTS":
-                return getTopPosts();
-            default:
-                return new ArrayList<>();
-        }
+        return switch (type) {
+            case "TOP_MONTHLY" -> getTopMonthly();
+            case "TOP_WEEKLY" -> getTopWeekly();
+            case "TOP_DAILY" -> getTopDaily();
+            case "TOP_ALL" -> getTopAll();
+            case "CHAPTERS" -> getTopChapters();
+            case "POSTS" -> getTopPosts();
+            default -> new ArrayList<>();
+        };
     }
 
     private List<SampleStoryDTO> getTopPosts() {
