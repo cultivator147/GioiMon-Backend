@@ -1,5 +1,7 @@
 package hust.project.gioimon.gm_story.service.jdbc;
 
+import hust.project.gioimon.gm_story.service.cache.ListStoryCache;
+import hust.project.gioimon.gm_story.service.response.HistoryStory;
 import hust.project.gioimon.gm_story.service.response.SampleStoryDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -98,5 +100,21 @@ public class ListStoriesRepository extends BaseRepository {
         Page<SampleStoryDTO> sampleStoryDTOS = getPage(sqlBuilder.toString(), params, page, size, SampleStoryDTO.class);
         sampleStoryDTOS.stream().forEach(story -> story.setChapters(chaptersRepository.getListChapters(story.getId(), 0, 3)));
         return sampleStoryDTOS;
+    }
+    public Page<HistoryStory> getReadingStory(Long userId, int page, int size){
+        String sqlBuilder = """
+                    SELECT * FROM reading_history WHERE user_id = :userId
+                """;
+        Map<String, Object> params = new HashMap<>();
+        params.put("userId", userId);
+        Page<HistoryStory> paging = getPage(sqlBuilder, params, page, size, HistoryStory.class);
+        List<HistoryStory> stories = paging.getContent();
+        stories.forEach(story -> {
+            SampleStoryDTO sample = ListStoryCache.getStoryById(story.getStoryId());
+            story.setTitle(sample.getTitle());
+            story.setLink(sample.getLink());
+            story.setPicture(sample.getPicture());
+        });
+        return paging;
     }
 }

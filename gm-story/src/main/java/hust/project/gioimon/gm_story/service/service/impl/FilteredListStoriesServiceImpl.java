@@ -3,6 +3,7 @@ package hust.project.gioimon.gm_story.service.service.impl;
 import hust.project.gioimon.gm_story.service.cache.ListStoryCache;
 import hust.project.gioimon.gm_story.service.constant.Common;
 import hust.project.gioimon.gm_story.service.jdbc.ListStoriesRepository;
+import hust.project.gioimon.gm_story.service.response.HistoryStory;
 import hust.project.gioimon.gm_story.service.response.SampleStoryDTO;
 import hust.project.gioimon.gm_story.service.service.FilteredListStoriesService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,11 @@ public class FilteredListStoriesServiceImpl implements FilteredListStoriesServic
     @Override
     public List<SampleStoryDTO> getSuggestedListStories() {
         return listStoriesRepository.getSuggestedListStories();
+    }
+
+    @Override
+    public Page<HistoryStory> getReadingStory(Long userId, int page, int size) {
+        return listStoriesRepository.getReadingStory(userId, page, size);
     }
 
     @Override

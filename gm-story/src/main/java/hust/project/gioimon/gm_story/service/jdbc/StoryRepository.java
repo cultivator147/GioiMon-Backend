@@ -2,10 +2,12 @@ package hust.project.gioimon.gm_story.service.jdbc;
 
 import hust.project.gioimon.gm_story.service.response.DetailStoryDTO;
 import hust.project.gioimon.gm_story.service.response.HistoryDTO;
+import hust.project.gioimon.gm_story.service.response.HistoryStory;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
 public class StoryRepository extends BaseRepository{
@@ -28,14 +30,23 @@ public class StoryRepository extends BaseRepository{
         params.put("storyId", storyId);
         return queryForObject(sql, params, String.class);
     }
-    public HistoryDTO logHistory(long userId, long storyId, long chapterNumber){
-        String sql = "INSERT INTO reading_history(user_id,story_id,chapter_number, time) VALUES(:userId, :storyId, :chapterNumber, NOW())";
+    public HistoryStory logHistory(long userId, long storyId, long chapterNumber){
+        String sql = "SELECT * FROM reading_history WHERE user_id = :userId AND story_id = :storyId";
+
         Map<String, Object> params = new HashMap<>();
         params.put("userId", userId);
         params.put("storyId", storyId);
+
+        HistoryStory historyStory = queryForObject(sql, params, HistoryStory.class);
+        if(historyStory != null){
+            sql = "UPDATE  reading_history SET chapter_number = :chapterNumber,  time = :current WHERE story_id = :storyId AND user_id = :userId";
+        }else{
+            sql = "INSERT INTO reading_history(user_id,story_id,chapter_number, time) VALUES(:userId, :storyId, :chapterNumber, :current)";
+        }
         params.put("chapterNumber", chapterNumber);
+        params.put("current", System.currentTimeMillis());
         executeSqlDatabase(sql, params);
-        return new HistoryDTO(storyId, chapterNumber);
+        return new HistoryStory(storyId, userId, storyId, chapterNumber);
     }
     public Long getViews(Long storyId){
         String sql = "SELECT SUM(views) FROM stories_chapters WHERE story_id = :storyId";

@@ -39,5 +39,13 @@ public class ListStoryCache {
     public static int size(){
         return LIST_STORIES.size();
     }
+    public static SampleStoryDTO getStoryById(Long id){
+        for(SampleStoryDTO story: LIST_STORIES){
+            if(story.getId().equals(id)){
+                return story;
+            }
+        }
+        return null;
+    }
 
 }

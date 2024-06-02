@@ -4,6 +4,7 @@ import hust.project.gioimon.gm_story.client.model.ResponseData;
 import hust.project.gioimon.gm_story.service.response.ContentDTO;
 import hust.project.gioimon.gm_story.service.response.DetailStoryDTO;
 import hust.project.gioimon.gm_story.service.response.HistoryDTO;
+import hust.project.gioimon.gm_story.service.response.HistoryStory;
 import hust.project.gioimon.gm_story.service.service.StoryService;
 import hust.project.gioimon.gm_story.service.utils.BaseResponse;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class StoryController {
         return BaseResponse.success(storyService.getContent(story_id, chapter_number));
     }
     @PostMapping("/history")
-    public ResponseEntity<ResponseData<HistoryDTO>> logHistory(@RequestHeader(name = "user_id")long userId, @RequestHeader(name = "Authorization")String token, @RequestBody HistoryDTO historyDTO){
+    public ResponseEntity<ResponseData<HistoryStory>> logHistory(@RequestHeader(name = "user_id")long userId, @RequestHeader(name = "Authorization")String token, @RequestBody HistoryDTO historyDTO){
         return BaseResponse.success(storyService.logHistory(userId, historyDTO.getStory_id(), historyDTO.getChapter_number()));
     }
 }

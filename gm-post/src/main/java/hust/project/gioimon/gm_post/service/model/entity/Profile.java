@@ -16,14 +16,9 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 public class Profile {
-    @Id
-    @Column(name = "user_id")
     private Long userId;
-    @Column(name = "nickname")
     private String nickname;
-    @Column(name = "avatar")
     private String avatar;
     private String dateOfBirth;
     private String zodiac;

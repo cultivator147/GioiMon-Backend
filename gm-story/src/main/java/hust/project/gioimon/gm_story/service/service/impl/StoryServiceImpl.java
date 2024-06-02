@@ -1,10 +1,7 @@
 package hust.project.gioimon.gm_story.service.service.impl;
 
 import hust.project.gioimon.gm_story.service.jdbc.StoryRepository;
-import hust.project.gioimon.gm_story.service.response.ChapterDTO;
-import hust.project.gioimon.gm_story.service.response.ContentDTO;
-import hust.project.gioimon.gm_story.service.response.DetailStoryDTO;
-import hust.project.gioimon.gm_story.service.response.HistoryDTO;
+import hust.project.gioimon.gm_story.service.response.*;
 import hust.project.gioimon.gm_story.service.service.CategoryService;
 import hust.project.gioimon.gm_story.service.service.ChapterService;
 import hust.project.gioimon.gm_story.service.service.StoryService;
@@ -50,7 +47,7 @@ public class StoryServiceImpl implements StoryService {
         return contentDTO;
     }
     @Override
-    public HistoryDTO logHistory(long userId, long storyId, long chapterNumber) {
+    public HistoryStory logHistory(long userId, long storyId, long chapterNumber) {
         chapterService.plusView(storyId, chapterNumber);
         return storyRepository.logHistory(userId, storyId, chapterNumber);
     }

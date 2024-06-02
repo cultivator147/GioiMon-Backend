@@ -2,9 +2,12 @@ package hust.project.gioimon.gm_story.service.controllers;
 
 import hust.project.gioimon.gm_story.client.model.ResponseData;
 import hust.project.gioimon.gm_story.service.constant.FilterConstants;
+import hust.project.gioimon.gm_story.service.response.HistoryStory;
 import hust.project.gioimon.gm_story.service.response.SampleStoryDTO;
 import hust.project.gioimon.gm_story.service.service.FilteredListStoriesService;
 import hust.project.gioimon.gm_story.service.utils.BaseResponse;
+import hust.project.gioimon.gm_story.service.utils.token.TokenUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -41,6 +44,15 @@ public class ListStoryController {
     public ResponseEntity<ResponseData<List<SampleStoryDTO>>> getReadingHistory(
     ) {
         return BaseResponse.success(filteredListStoriesService.getSuggestedListStories());
+    }
+    @GetMapping("/reading-story")
+    public ResponseEntity<ResponseData<Page<HistoryStory>>> getReadingStory(
+            HttpServletRequest request,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "5") int size
+    ) {
+        Long userId = TokenUtil.getUserIdFromRequest(request);
+        return BaseResponse.success(filteredListStoriesService.getReadingStory(userId, page, size));
     }
     @GetMapping("/top-stories")
     public ResponseEntity<ResponseData<Page<SampleStoryDTO>>> getTopStories(
