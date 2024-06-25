@@ -1,7 +1,7 @@
 package hust.project.gioimon.gm_story.service.service;
 
 
-import hust.project.gioimon.gm_story.service.response.ChapterDTO;
+import hust.project.gioimon.gm_story.service.model.ChapterDTO;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

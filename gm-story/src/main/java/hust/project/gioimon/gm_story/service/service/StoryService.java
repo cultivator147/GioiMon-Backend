@@ -1,10 +1,9 @@
 package hust.project.gioimon.gm_story.service.service;
 
 
-import hust.project.gioimon.gm_story.service.response.ContentDTO;
-import hust.project.gioimon.gm_story.service.response.DetailStoryDTO;
-import hust.project.gioimon.gm_story.service.response.HistoryDTO;
-import hust.project.gioimon.gm_story.service.response.HistoryStory;
+import hust.project.gioimon.gm_story.service.model.ContentDTO;
+import hust.project.gioimon.gm_story.service.model.DetailStoryDTO;
+import hust.project.gioimon.gm_story.service.model.HistoryStory;
 
 public interface StoryService {
     DetailStoryDTO getDetail(int storyId);

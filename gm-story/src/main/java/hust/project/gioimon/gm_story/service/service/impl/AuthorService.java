@@ -1,7 +1,7 @@
 package hust.project.gioimon.gm_story.service.service.impl;
 
-import hust.project.gioimon.gm_story.service.jdbc.AuthorRepository;
-import hust.project.gioimon.gm_story.service.response.AuthorDTO;
+import hust.project.gioimon.gm_story.service.repository.AuthorRepository;
+import hust.project.gioimon.gm_story.service.model.AuthorDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

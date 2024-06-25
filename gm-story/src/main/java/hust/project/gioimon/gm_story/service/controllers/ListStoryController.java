@@ -2,8 +2,8 @@ package hust.project.gioimon.gm_story.service.controllers;
 
 import hust.project.gioimon.gm_story.client.model.ResponseData;
 import hust.project.gioimon.gm_story.service.constant.FilterConstants;
-import hust.project.gioimon.gm_story.service.response.HistoryStory;
-import hust.project.gioimon.gm_story.service.response.SampleStoryDTO;
+import hust.project.gioimon.gm_story.service.model.HistoryStory;
+import hust.project.gioimon.gm_story.service.model.SampleStoryDTO;
 import hust.project.gioimon.gm_story.service.service.FilteredListStoriesService;
 import hust.project.gioimon.gm_story.service.utils.BaseResponse;
 import hust.project.gioimon.gm_story.service.utils.token.TokenUtil;

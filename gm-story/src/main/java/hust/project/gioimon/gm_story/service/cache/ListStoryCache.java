@@ -1,11 +1,9 @@
 package hust.project.gioimon.gm_story.service.cache;
 
-import hust.project.gioimon.gm_story.service.response.SampleStoryDTO;
+import hust.project.gioimon.gm_story.service.model.SampleStoryDTO;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ListStoryCache {
     public static List<SampleStoryDTO> LIST_STORIES = new ArrayList<>();

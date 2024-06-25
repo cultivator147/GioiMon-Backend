@@ -1,12 +1,10 @@
 package hust.project.gioimon.gm_story.service.scheduling;
 
 import hust.project.gioimon.gm_story.service.cache.ListStoryCache;
-import hust.project.gioimon.gm_story.service.jdbc.StoryRepository;
-import hust.project.gioimon.gm_story.service.response.SampleStoryDTO;
+import hust.project.gioimon.gm_story.service.repository.StoryRepository;
+import hust.project.gioimon.gm_story.service.model.SampleStoryDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

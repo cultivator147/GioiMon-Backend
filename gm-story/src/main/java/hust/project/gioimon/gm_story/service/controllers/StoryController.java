@@ -1,10 +1,10 @@
 package hust.project.gioimon.gm_story.service.controllers;
 
 import hust.project.gioimon.gm_story.client.model.ResponseData;
-import hust.project.gioimon.gm_story.service.response.ContentDTO;
-import hust.project.gioimon.gm_story.service.response.DetailStoryDTO;
-import hust.project.gioimon.gm_story.service.response.HistoryDTO;
-import hust.project.gioimon.gm_story.service.response.HistoryStory;
+import hust.project.gioimon.gm_story.service.model.ContentDTO;
+import hust.project.gioimon.gm_story.service.model.DetailStoryDTO;
+import hust.project.gioimon.gm_story.service.model.HistoryDTO;
+import hust.project.gioimon.gm_story.service.model.HistoryStory;
 import hust.project.gioimon.gm_story.service.service.StoryService;
 import hust.project.gioimon.gm_story.service.utils.BaseResponse;
 import lombok.RequiredArgsConstructor;

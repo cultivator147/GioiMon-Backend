@@ -1,13 +1,12 @@
 package hust.project.gioimon.gm_story.service.controllers;
 
 import hust.project.gioimon.gm_story.client.model.ResponseData;
-import hust.project.gioimon.gm_story.service.response.CategoryDTO;
+import hust.project.gioimon.gm_story.service.model.CategoryDTO;
 import hust.project.gioimon.gm_story.service.service.CategoryService;
 import hust.project.gioimon.gm_story.service.utils.BaseResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

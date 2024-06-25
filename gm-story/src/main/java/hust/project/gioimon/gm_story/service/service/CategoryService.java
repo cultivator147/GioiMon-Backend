@@ -1,6 +1,6 @@
 package hust.project.gioimon.gm_story.service.service;
 
-import hust.project.gioimon.gm_story.service.response.CategoryDTO;
+import hust.project.gioimon.gm_story.service.model.CategoryDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

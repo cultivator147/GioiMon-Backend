@@ -1,7 +1,7 @@
 package hust.project.gioimon.gm_story.service.service.impl;
 
-import hust.project.gioimon.gm_story.service.jdbc.ChaptersRepository;
-import hust.project.gioimon.gm_story.service.response.ChapterDTO;
+import hust.project.gioimon.gm_story.service.repository.ChaptersRepository;
+import hust.project.gioimon.gm_story.service.model.ChapterDTO;
 import hust.project.gioimon.gm_story.service.service.ChapterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

@@ -1,7 +1,7 @@
 package hust.project.gioimon.gm_story.service.service.impl;
 
-import hust.project.gioimon.gm_story.service.jdbc.StoryRepository;
-import hust.project.gioimon.gm_story.service.response.*;
+import hust.project.gioimon.gm_story.service.repository.StoryRepository;
+import hust.project.gioimon.gm_story.service.model.*;
 import hust.project.gioimon.gm_story.service.service.CategoryService;
 import hust.project.gioimon.gm_story.service.service.ChapterService;
 import hust.project.gioimon.gm_story.service.service.StoryService;

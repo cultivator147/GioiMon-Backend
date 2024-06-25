@@ -1,7 +1,7 @@
 package hust.project.gioimon.gm_story.service.service.impl;
 
-import hust.project.gioimon.gm_story.service.jdbc.CategoryRepository;
-import hust.project.gioimon.gm_story.service.response.CategoryDTO;
+import hust.project.gioimon.gm_story.service.repository.CategoryRepository;
+import hust.project.gioimon.gm_story.service.model.CategoryDTO;
 import hust.project.gioimon.gm_story.service.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

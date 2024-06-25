@@ -2,9 +2,9 @@ package hust.project.gioimon.gm_story.service.service.impl;
 
 import hust.project.gioimon.gm_story.service.cache.ListStoryCache;
 import hust.project.gioimon.gm_story.service.constant.Common;
-import hust.project.gioimon.gm_story.service.jdbc.ListStoriesRepository;
-import hust.project.gioimon.gm_story.service.response.HistoryStory;
-import hust.project.gioimon.gm_story.service.response.SampleStoryDTO;
+import hust.project.gioimon.gm_story.service.repository.ListStoriesRepository;
+import hust.project.gioimon.gm_story.service.model.HistoryStory;
+import hust.project.gioimon.gm_story.service.model.SampleStoryDTO;
 import hust.project.gioimon.gm_story.service.service.FilteredListStoriesService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,8 +1,8 @@
 package hust.project.gioimon.gm_story.service.service;
 
 
-import hust.project.gioimon.gm_story.service.response.HistoryStory;
-import hust.project.gioimon.gm_story.service.response.SampleStoryDTO;
+import hust.project.gioimon.gm_story.service.model.HistoryStory;
+import hust.project.gioimon.gm_story.service.model.SampleStoryDTO;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
