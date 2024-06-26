@@ -18,6 +18,13 @@ public class ListStoryCache {
             }
         });
     }
+    public static void updateChapterQuantity(Long storyId, Long chapterQuantity){
+        LIST_STORIES.forEach(story -> {
+            if(story.getId().equals(storyId)){
+                story.setChaptersQuantity(chapterQuantity);
+            }
+        });
+    }
     public static void updateStory(SampleStoryDTO story){
         LIST_STORIES.removeIf(s -> s.getId().equals(story.getId()));
         LIST_STORIES.add(story);

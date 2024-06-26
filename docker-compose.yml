@@ -4,7 +4,7 @@ services:
     build: mysql
     image: mysql:latest
     container_name: mysql
-    restart: on-failure
+    restart: always
     networks:
       - gm-net
     volumes:
@@ -20,7 +20,7 @@ services:
     container_name: eureka-server
     volumes:
       - ./eureka-server/target:/var/app/gm
-    restart: no
+    restart: always
     ports:
       - "8761:8761"
       - "7761:7761"

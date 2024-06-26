@@ -6,9 +6,13 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class Scheduler {
-    private final UpdateStoryProcessor updateStoryProcessor;
+    private final UpdateViewsProcessor updateViewsProcessor;
+    private final UpdateChapterProcessor updateChapterProcessor;
     public void init(){
-        ScheduleUpdateStory scheduleUpdateStory = new ScheduleUpdateStory(updateStoryProcessor);
+        ScheduleUpdateStory scheduleUpdateStory = new ScheduleUpdateStory(updateViewsProcessor);
+        ScheduleUpdateStory scheduleUpdateChapter = new ScheduleUpdateStory(updateChapterProcessor);
         scheduleUpdateStory.start();
+        scheduleUpdateChapter.start();
+
     }
 }

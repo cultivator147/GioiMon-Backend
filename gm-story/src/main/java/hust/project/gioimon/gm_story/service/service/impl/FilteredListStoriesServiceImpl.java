@@ -2,10 +2,12 @@ package hust.project.gioimon.gm_story.service.service.impl;
 
 import hust.project.gioimon.gm_story.service.cache.ListStoryCache;
 import hust.project.gioimon.gm_story.service.constant.Common;
+import hust.project.gioimon.gm_story.service.model.DetailStoryDTO;
 import hust.project.gioimon.gm_story.service.repository.ListStoriesRepository;
 import hust.project.gioimon.gm_story.service.model.HistoryStory;
 import hust.project.gioimon.gm_story.service.model.SampleStoryDTO;
 import hust.project.gioimon.gm_story.service.service.FilteredListStoriesService;
+import hust.project.gioimon.gm_story.service.service.StoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 public class FilteredListStoriesServiceImpl implements FilteredListStoriesService {
+    private final StoryService storyService;
     private final ListStoriesRepository listStoriesRepository;
     @Override
     public Page<SampleStoryDTO> getFilteredListStories(long categoryId, int writingState, String keyword, int page, int size, String sortBy) {
@@ -67,7 +70,7 @@ public class FilteredListStoriesServiceImpl implements FilteredListStoriesServic
     }
 
     private List<SampleStoryDTO> getTopChapters() {
-        Comparator<SampleStoryDTO> comparator = (o1, o2) -> (int) (o1.getViews() - o2.getViews());
+        Comparator<SampleStoryDTO> comparator = Comparator.comparingInt(o -> o.getChapters().size());
         return ListStoryCache.LIST_STORIES.stream()
                 .sorted(comparator)
                 .skip(0)
