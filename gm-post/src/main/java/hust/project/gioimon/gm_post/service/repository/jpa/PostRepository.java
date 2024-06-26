@@ -1,5 +1,6 @@
 package hust.project.gioimon.gm_post.service.repository.jpa;
 
+import hust.project.gioimon.gm_post.client.model.TopPostStoryResponse;
 import hust.project.gioimon.gm_post.service.model.entity.Post;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.Modifying;
@@ -13,4 +14,7 @@ public interface PostRepository extends CrudRepository<Post, Long> {
     @Modifying
     @Query("UPDATE Post p SET p.favouriteCount = :favCount, p.averageFavouritePoint = :fav WHERE p.id = :postId")
     void updatePostInteraction(long postId, double fav, double favCount);
+
+    @Query("SELECT story_id, COUNT(*) AS post_count FROM posts GROUP BY story_id ORDER BY post_count DESC LIMIT 10")
+    TopPostStoryResponse getTopStoryByPost();
 }

@@ -1,6 +1,8 @@
 package hust.project.gioimon.gm_post.service.service;
 
 import hust.project.gioimon.gm_post.client.feign_client.UserClient;
+import hust.project.gioimon.gm_post.client.model.GetPostStoryRequest;
+import hust.project.gioimon.gm_post.client.model.TopPostStoryResponse;
 import hust.project.gioimon.gm_post.service.cache.ListPostCache;
 import hust.project.gioimon.gm_post.service.converter.PostConverter;
 import hust.project.gioimon.gm_post.service.model.dto.request.AddCoinReqDTO;
@@ -26,6 +28,10 @@ public class PostService {
     public Post getPost(GetDetailPostDTO body) {
         Optional<Post> postOpt =  postRepository.findById(body.getPostId());
         return postOpt.orElse(null);
+    }
+
+    public TopPostStoryResponse topPostStory(GetPostStoryRequest body) {
+        return postRepository.getTopStoryByPost();
     }
     public void updateFavInteraction(long postId, long favCount, double favAvgPoint){
         postRepository.updatePostInteraction(postId,favAvgPoint, favCount);

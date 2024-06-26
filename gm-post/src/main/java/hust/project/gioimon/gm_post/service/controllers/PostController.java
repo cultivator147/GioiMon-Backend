@@ -1,6 +1,7 @@
 package hust.project.gioimon.gm_post.service.controllers;
 
 import hust.project.gioimon.gm_post.client.check_permission.CheckPermissionAnno;
+import hust.project.gioimon.gm_post.client.model.GetPostStoryRequest;
 import hust.project.gioimon.gm_post.client.model.ResponseData;
 import hust.project.gioimon.gm_post.client.utils.Scope;
 import hust.project.gioimon.gm_post.service.model.dto.request.CreatePostDTO;
@@ -39,6 +40,10 @@ public class PostController {
     @GetMapping(value = "/")
     public ResponseEntity<ResponseData<Object>> getPost(@RequestBody GetDetailPostDTO body){
         return BaseResponse.success(postService.getPost(body));
+    }
+    @GetMapping(value = "/top-post-story")
+    public ResponseEntity<ResponseData<Object>> topPostStory(@RequestBody GetPostStoryRequest body){
+        return BaseResponse.success(postService.topPostStory(body));
     }
     @CheckPermissionAnno(uri = "create-post", scope = Scope.UPDATE)
     @PostMapping(value = "/fav-post")

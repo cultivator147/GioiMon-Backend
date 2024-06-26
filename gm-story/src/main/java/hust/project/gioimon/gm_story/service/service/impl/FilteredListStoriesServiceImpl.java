@@ -1,5 +1,9 @@
 package hust.project.gioimon.gm_story.service.service.impl;
 
+import hust.project.gioimon.gm_story.client.feign_client.PostClient;
+import hust.project.gioimon.gm_story.client.feign_client.UserClient;
+import hust.project.gioimon.gm_story.client.model.GetPostStoryRequest;
+import hust.project.gioimon.gm_story.client.model.TopPostStoryResponse;
 import hust.project.gioimon.gm_story.service.cache.ListStoryCache;
 import hust.project.gioimon.gm_story.service.constant.Common;
 import hust.project.gioimon.gm_story.service.model.DetailStoryDTO;
@@ -24,6 +28,7 @@ import java.util.stream.Collectors;
 public class FilteredListStoriesServiceImpl implements FilteredListStoriesService {
     private final StoryService storyService;
     private final ListStoriesRepository listStoriesRepository;
+    private final PostClient postClient;
     @Override
     public Page<SampleStoryDTO> getFilteredListStories(long categoryId, int writingState, String keyword, int page, int size, String sortBy) {
         System.out.println("keyword:"+ keyword);
@@ -61,6 +66,9 @@ public class FilteredListStoriesServiceImpl implements FilteredListStoriesServic
     }
 
     private List<SampleStoryDTO> getTopPosts() {
+        GetPostStoryRequest getPostStoryRequest = new GetPostStoryRequest();
+        getPostStoryRequest.setDuration(Common.ONE_DAY);
+        TopPostStoryResponse topPostStoryResponse = postClient.topPostStory(getPostStoryRequest);
         Comparator<SampleStoryDTO> comparator = (o1, o2) -> (int) (o1.getViews() - o2.getViews());
         return ListStoryCache.LIST_STORIES.stream()
                 .sorted(comparator)
