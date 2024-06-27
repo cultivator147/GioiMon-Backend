@@ -52,5 +52,21 @@ public class ListStoryCache {
         }
         return null;
     }
+    public static long getViews(Long id){
+        for(SampleStoryDTO story: LIST_STORIES){
+            if(story.getId().equals(id)){
+                return story.getViews();
+            }
+        }
+        return 0;
+    }
+    public static long getChapterQuantity(Long id){
+        for(SampleStoryDTO story: LIST_STORIES){
+            if(story.getId().equals(id)){
+                return story.getChaptersQuantity();
+            }
+        }
+        return 0;
+    }
 
 }

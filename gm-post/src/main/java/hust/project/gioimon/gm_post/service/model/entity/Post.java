@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Post {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue()
     @Column(name = "ID")
     private Long id;
     @Column(name = "owner_id")

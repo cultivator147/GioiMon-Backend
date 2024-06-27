@@ -1,12 +1,9 @@
 package hust.project.gioimon.gm_story.service.service.impl;
 
 import hust.project.gioimon.gm_story.client.feign_client.PostClient;
-import hust.project.gioimon.gm_story.client.feign_client.UserClient;
 import hust.project.gioimon.gm_story.client.model.GetPostStoryRequest;
-import hust.project.gioimon.gm_story.client.model.TopPostStoryResponse;
 import hust.project.gioimon.gm_story.service.cache.ListStoryCache;
 import hust.project.gioimon.gm_story.service.constant.Common;
-import hust.project.gioimon.gm_story.service.model.DetailStoryDTO;
 import hust.project.gioimon.gm_story.service.repository.ListStoriesRepository;
 import hust.project.gioimon.gm_story.service.model.HistoryStory;
 import hust.project.gioimon.gm_story.service.model.SampleStoryDTO;
@@ -15,11 +12,15 @@ import hust.project.gioimon.gm_story.service.service.StoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,7 +34,100 @@ public class FilteredListStoriesServiceImpl implements FilteredListStoriesServic
     public Page<SampleStoryDTO> getFilteredListStories(long categoryId, int writingState, String keyword, int page, int size, String sortBy) {
         System.out.println("keyword:"+ keyword);
         if(keyword.isEmpty()){
-            return listStoriesRepository.getFilteredListStories(categoryId, writingState, page, size, sortBy);
+            Page<SampleStoryDTO> sampleStoryDTOPage = listStoriesRepository.getFilteredListStories(categoryId, writingState, page, size, sortBy);
+            Comparator<SampleStoryDTO> com = (o1, o2) -> switch (sortBy) {
+                case "UPDATE_DATE" ->
+                        (int) (o1.getLastUpdateDate() - o2.getLastUpdateDate());
+                case "VIEWS" -> (int) (o1.getViews() - o2.getViews());
+                case "CHAPTERS" ->
+                        o1.getChapters().size() - o2.getChapters().size();
+                default ->
+                        (int) (o1.getLastUpdateDate() - o2.getLastUpdateDate());
+            };
+            return new Page<>() {
+                @Override
+                public int getTotalPages() {
+                    return sampleStoryDTOPage.getTotalPages();
+                }
+
+                @Override
+                public long getTotalElements() {
+                    return sampleStoryDTOPage.getTotalElements();
+                }
+
+                @Override
+                public <U> Page<U> map(Function<? super SampleStoryDTO, ? extends U> converter) {
+                    return null;
+                }
+
+                @Override
+                public int getNumber() {
+                    return sampleStoryDTOPage.getNumber();
+                }
+
+                @Override
+                public int getSize() {
+                    return sampleStoryDTOPage.getSize();
+                }
+
+                @Override
+                public int getNumberOfElements() {
+                    return sampleStoryDTOPage.getNumberOfElements();
+                }
+
+                @Override
+                public List<SampleStoryDTO> getContent() {
+                    List<SampleStoryDTO> content = sampleStoryDTOPage.getContent().stream().sorted(com.reversed()).collect(Collectors.toList());
+                    content.stream().forEach(story -> story.setChaptersQuantity(ListStoryCache.getChapterQuantity(story.getId())));
+                    content.stream().forEach(story -> story.setViews(ListStoryCache.getViews(story.getId())));
+                    return content;
+                }
+
+                @Override
+                public boolean hasContent() {
+                    return sampleStoryDTOPage.hasContent();
+                }
+
+                @Override
+                public Sort getSort() {
+                    return sampleStoryDTOPage.getSort();
+                }
+
+                @Override
+                public boolean isFirst() {
+                    return sampleStoryDTOPage.isFirst();
+                }
+
+                @Override
+                public boolean isLast() {
+                    return sampleStoryDTOPage.isLast();
+                }
+
+                @Override
+                public boolean hasNext() {
+                    return sampleStoryDTOPage.hasNext();
+                }
+
+                @Override
+                public boolean hasPrevious() {
+                    return sampleStoryDTOPage.hasPrevious();
+                }
+
+                @Override
+                public Pageable nextPageable() {
+                    return sampleStoryDTOPage.nextPageable();
+                }
+
+                @Override
+                public Pageable previousPageable() {
+                    return sampleStoryDTOPage.previousPageable();
+                }
+
+                @Override
+                public Iterator<SampleStoryDTO> iterator() {
+                    return sampleStoryDTOPage.iterator();
+                }
+            };
         }else{
             return listStoriesRepository.search(keyword, page, size);
         }
@@ -68,19 +162,16 @@ public class FilteredListStoriesServiceImpl implements FilteredListStoriesServic
     private List<SampleStoryDTO> getTopPosts() {
         GetPostStoryRequest getPostStoryRequest = new GetPostStoryRequest();
         getPostStoryRequest.setDuration(Common.ONE_DAY);
-        TopPostStoryResponse topPostStoryResponse = postClient.topPostStory(getPostStoryRequest);
-        Comparator<SampleStoryDTO> comparator = (o1, o2) -> (int) (o1.getViews() - o2.getViews());
-        return ListStoryCache.LIST_STORIES.stream()
-                .sorted(comparator)
-                .skip(0)
-                .limit(10)
-                .collect(Collectors.toList());
+        List<Long> topPostStoryResponse = postClient.topPostStory(getPostStoryRequest);
+        List<SampleStoryDTO> result = new ArrayList<>();
+        topPostStoryResponse.stream().forEach(sid -> result.add(ListStoryCache.getStoryById(sid)));
+        return result;
     }
 
     private List<SampleStoryDTO> getTopChapters() {
         Comparator<SampleStoryDTO> comparator = Comparator.comparingInt(o -> o.getChapters().size());
         return ListStoryCache.LIST_STORIES.stream()
-                .sorted(comparator)
+                .sorted(comparator.reversed())
                 .skip(0)
                 .limit(10)
                 .collect(Collectors.toList());
@@ -89,7 +180,7 @@ public class FilteredListStoriesServiceImpl implements FilteredListStoriesServic
     private List<SampleStoryDTO> getTopAll(){
         Comparator<SampleStoryDTO> comparator = (o1, o2) -> (int) (o1.getViews() - o2.getViews());
         return ListStoryCache.LIST_STORIES.stream()
-                .sorted(comparator)
+                .sorted(comparator.reversed())
                 .skip(0)
                 .limit(10)
                 .collect(Collectors.toList());
@@ -99,7 +190,7 @@ public class FilteredListStoriesServiceImpl implements FilteredListStoriesServic
         Comparator<SampleStoryDTO> comparator = (o1, o2) -> (int) (o1.getViews() - o2.getViews());
         return ListStoryCache.LIST_STORIES.stream()
                 .filter(story -> story.getLastUpdateDate() > withinTime)
-                .sorted(comparator)
+                .sorted(comparator.reversed())
                 .skip(0)
                 .limit(10)
                 .collect(Collectors.toList());
@@ -109,7 +200,7 @@ public class FilteredListStoriesServiceImpl implements FilteredListStoriesServic
         Comparator<SampleStoryDTO> comparator = (o1, o2) -> (int) (o1.getViews() - o2.getViews());
         return ListStoryCache.LIST_STORIES.stream()
                 .filter(story -> story.getLastUpdateDate() > withinTime)
-                .sorted(comparator)
+                .sorted(comparator.reversed())
                 .skip(0)
                 .limit(10)
                 .collect(Collectors.toList());
@@ -119,7 +210,7 @@ public class FilteredListStoriesServiceImpl implements FilteredListStoriesServic
         Comparator<SampleStoryDTO> comparator = (o1, o2) -> (int) (o1.getViews() - o2.getViews());
         return ListStoryCache.LIST_STORIES.stream()
                 .filter(story -> story.getLastUpdateDate() > withinTime)
-                .sorted(comparator)
+                .sorted(comparator.reversed())
                 .skip(0)
                 .limit(10)
                 .collect(Collectors.toList());

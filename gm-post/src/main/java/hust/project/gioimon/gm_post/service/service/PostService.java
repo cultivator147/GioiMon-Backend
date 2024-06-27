@@ -9,16 +9,19 @@ import hust.project.gioimon.gm_post.service.model.dto.request.AddCoinReqDTO;
 import hust.project.gioimon.gm_post.service.model.dto.request.CreatePostDTO;
 import hust.project.gioimon.gm_post.service.model.dto.request.GetDetailPostDTO;
 import hust.project.gioimon.gm_post.service.model.entity.Post;
+import hust.project.gioimon.gm_post.service.repository.jdbc.PostJDBCRepository;
 import hust.project.gioimon.gm_post.service.repository.jpa.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
+    private final PostJDBCRepository postJDBCRepository;
     private final UserClient userClient;
 
     public void createPost(String header, Long ownerId, CreatePostDTO createPostDTO){
@@ -30,8 +33,8 @@ public class PostService {
         return postOpt.orElse(null);
     }
 
-    public TopPostStoryResponse topPostStory(GetPostStoryRequest body) {
-        return postRepository.getTopStoryByPost();
+    public List<Long> topPostStory(GetPostStoryRequest body) {
+        return postJDBCRepository.getTopStoryByPost();
     }
     public void updateFavInteraction(long postId, long favCount, double favAvgPoint){
         postRepository.updatePostInteraction(postId,favAvgPoint, favCount);

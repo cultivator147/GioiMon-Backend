@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(value = "user-client", url = "http://localhost:8802")
+import java.util.List;
+
+@FeignClient(value = "post-client", url = "http://localhost:8802")
 public interface PostClient {
     @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, value = "/v1.0/post/top-post-story")
-    TopPostStoryResponse topPostStory(@RequestBody GetPostStoryRequest body);
+    List<Long> topPostStory(@RequestBody GetPostStoryRequest body);
 }

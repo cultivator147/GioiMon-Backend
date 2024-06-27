@@ -8,13 +8,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface PostRepository extends CrudRepository<Post, Long> {
     @Transactional
     @Modifying
     @Query("UPDATE Post p SET p.favouriteCount = :favCount, p.averageFavouritePoint = :fav WHERE p.id = :postId")
     void updatePostInteraction(long postId, double fav, double favCount);
-
-    @Query("SELECT story_id, COUNT(*) AS post_count FROM posts GROUP BY story_id ORDER BY post_count DESC LIMIT 10")
-    TopPostStoryResponse getTopStoryByPost();
 }
