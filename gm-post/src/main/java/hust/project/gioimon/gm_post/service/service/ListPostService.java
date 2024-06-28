@@ -1,19 +1,14 @@
 package hust.project.gioimon.gm_post.service.service;
 
 import hust.project.gioimon.gm_post.client.feign_client.UserClient;
-import hust.project.gioimon.gm_post.service.cache.ListPostCache;
 import hust.project.gioimon.gm_post.service.converter.PostConverter;
 import hust.project.gioimon.gm_post.service.model.dto.response.PostResponseDTO;
 import hust.project.gioimon.gm_post.service.model.entity.Post;
-import hust.project.gioimon.gm_post.service.model.entity.PostComment;
 import hust.project.gioimon.gm_post.service.model.entity.PostFavourite;
 import hust.project.gioimon.gm_post.service.model.entity.Profile;
 import hust.project.gioimon.gm_post.service.repository.jpa.ListPostRepository;
 import hust.project.gioimon.gm_post.service.utils.Validator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,25 +24,21 @@ public class ListPostService {
     private final PostFavouriteService postFavouriteService;
     private final PostCommentService postCommentService;
     private final UserClient userClient;
-    public List<PostResponseDTO> getListPost(Long userId,Long friendId, int page,
-                                             int slots, int filterByFiled,
-                                             int favouriteStatus, Long storyId, int sortBy){
-        List<Post> listPostEntity;
 
-        Comparator<Post> comparatorSortBy = (o1, o2) -> (int) (o1.getCreateTime() - o2.getCreateTime());
-        if(friendId.equals(0L)){
-            listPostEntity = listPostRepository
-                    .findAll();
-        }else{
-            listPostEntity = listPostRepository
-                    .findAll()
-                    .stream()
-                    .filter(p -> p.getOwnerId().equals(friendId))
-                    .toList();
+    public List<PostResponseDTO> getListPost(Long userId, Long friendId, int page,
+                                             int slots, int sortByTop,
+                                             int favouriteStatus, Long storyId, int sortBy) {
+        List<Post> listPostEntity;
+        if (sortByTop == 1) {
+            listPostEntity = getTopFavouritePost();
+        } else if (sortByTop == 2) {
+            listPostEntity = getTopCommentPost();
+        } else {
+            Comparator<Post> comparatorSortBy = (o1, o2) -> (int) (o1.getCreateTime() - o2.getCreateTime());
+            listPostEntity = listPostRepository.findAll().stream().sorted(sortBy == 2 ? comparatorSortBy : comparatorSortBy.reversed()).collect(Collectors.toList());
         }
-        listPostEntity = listPostEntity.stream().sorted(sortBy == 2 ? comparatorSortBy : comparatorSortBy.reversed()).collect(Collectors.toList());
         List<PostResponseDTO> results = new ArrayList<>();
-        for(Post p : listPostEntity){
+        for (Post p : listPostEntity) {
             PostFavourite pf = postFavouriteService.get(userId, p.getId());
             PostResponseDTO postResponseDTO = PostConverter.toResponseDTO(p);
             postResponseDTO.setFavourited(pf.getFavourite());
@@ -57,7 +48,7 @@ public class ListPostService {
         }
         results = results.stream()
                 .filter(p -> filterByStory(p, storyId))
-                .filter(p -> filterByField(p,filterByFiled))
+                .filter(p -> filterByFriendId(userId, friendId))
                 .filter(p -> filterByFavouriteStatus(p, favouriteStatus))
                 .skip((long) page * slots)
                 .limit(slots)
@@ -66,53 +57,69 @@ public class ListPostService {
         results.forEach(this::setOwnerInformation);
         return results;
     }
-    private boolean filterByStory(PostResponseDTO post, Long storyId){
-        if(storyId == null || storyId == 0){
+
+    private boolean filterByStory(PostResponseDTO post, Long storyId) {
+        if (storyId == null || storyId == 0) {
             return true;
         }
         return Objects.equals(post.getStoryId(), storyId);
     }
-    private boolean filterByField(PostResponseDTO post, int filterBy){
-        if(filterBy == 0){
+
+    private boolean filterByFriendId(long userId, long friendId) {
+        if (friendId == 0) {
             return true;
         }
-        if(filterBy == 1){
-            return true;
-        }
-        if(filterBy == 2){
-            return true;
-        }
-        return true;
+        return friendId == userId;
     }
-    private boolean filterByFavouriteStatus(PostResponseDTO post, int status){
-        if(status == 0){
+
+    private boolean filterByFavouriteStatus(PostResponseDTO post, int status) {
+        if (status == 0) {
             return true;
         }
-        if(status == 1){
+        if (status == 1) {
             return post.getFavourited() == 1;
         }
-        if(status == 2){
+        if (status == 2) {
             return post.getFavourited() == 0;
         }
         return true;
     }
-    private void setOwnerInformation(PostResponseDTO post){
+
+    private void setOwnerInformation(PostResponseDTO post) {
         Profile p = userClient.getProfile(new Profile(post.getOwnerId())).getData();
-        if(!Validator.validateNull(p)){
+        if (!Validator.validateNull(p)) {
             return;
         }
-        if(Validator.validateNull(p.getAvatar())){
+        if (Validator.validateNull(p.getAvatar())) {
             post.setOwnerAvatar(p.getAvatar());
         }
-        if(Validator.validateNull(p.getNickname())){
+        if (Validator.validateNull(p.getNickname())) {
             post.setOwnerNickname(p.getNickname());
         }
+    }
+
+    public List<Post> getTopFavouritePost() {
+        List<Post> listPostEntity = listPostRepository.findAll();
+        listPostEntity = listPostEntity.stream()
+                .sorted((o1, o2) -> (int) (o2.getFavouriteCount() - o1.getFavouriteCount()))
+                .toList()
+        ;
+        return listPostEntity;
+    }
+
+    public List<Post> getTopCommentPost() {
+        List<Post> listPostEntity = listPostRepository.findAll();
+        listPostEntity = listPostEntity.stream()
+                .sorted((o1, o2) -> (int) (postCommentService.getCommentCount(o2.getId()) - postCommentService.getCommentCount(o1.getId())))
+                .toList()
+        ;
+        return listPostEntity;
     }
 
     public List<PostResponseDTO> getTopFavouritePost(Long userId, int page, int size) {
         List<Post> listPostEntity = listPostRepository.findAll();
         List<PostResponseDTO> results = new ArrayList<>();
-        for(Post p : listPostEntity){
+        for (Post p : listPostEntity) {
             PostFavourite pf = postFavouriteService.get(userId, p.getId());
             PostResponseDTO postResponseDTO = PostConverter.toResponseDTO(p);
             postResponseDTO.setFavourited(pf.getFavourite());
@@ -121,7 +128,7 @@ public class ListPostService {
             results.add(postResponseDTO);
         }
         results = results.stream()
-                .sorted((o1, o2) -> (int) (o1.getFavouritePoint() - o2.getFavouritePoint()))
+                .sorted((o1, o2) -> (int) (o2.getFavouriteCount() - o1.getFavouriteCount()))
                 .skip((long) page * size)
                 .limit(size)
                 .collect(Collectors.toList())
