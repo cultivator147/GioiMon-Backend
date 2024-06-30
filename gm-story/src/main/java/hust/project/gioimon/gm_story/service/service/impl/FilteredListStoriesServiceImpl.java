@@ -34,7 +34,7 @@ public class FilteredListStoriesServiceImpl implements FilteredListStoriesServic
     public Page<SampleStoryDTO> getFilteredListStories(long categoryId, int writingState, String keyword, int page, int size, String sortBy) {
         System.out.println("keyword:"+ keyword);
         if(keyword.isEmpty()){
-            Page<SampleStoryDTO> sampleStoryDTOPage = listStoriesRepository.getFilteredListStories(categoryId, writingState, page, size, sortBy);
+                Page<SampleStoryDTO> sampleStoryDTOPage = listStoriesRepository.getFilteredListStories(categoryId, writingState, page, size, sortBy);
             Comparator<SampleStoryDTO> com = (o1, o2) -> switch (sortBy) {
                 case "UPDATE_DATE" ->
                         (int) (o1.getLastUpdateDate() - o2.getLastUpdateDate());
@@ -154,6 +154,7 @@ public class FilteredListStoriesServiceImpl implements FilteredListStoriesServic
             case "TOP_DAILY" -> getTopDaily();
             case "TOP_ALL" -> getTopAll();
             case "CHAPTERS" -> getTopChapters();
+            case "VIEWS" -> getTopViews();
             case "POSTS" -> getTopPosts();
             default -> new ArrayList<>();
         };
@@ -162,12 +163,19 @@ public class FilteredListStoriesServiceImpl implements FilteredListStoriesServic
     private List<SampleStoryDTO> getTopPosts() {
         GetPostStoryRequest getPostStoryRequest = new GetPostStoryRequest();
         getPostStoryRequest.setDuration(Common.ONE_DAY);
-        List<Long> topPostStoryResponse = postClient.topPostStory(getPostStoryRequest);
+        List<Long> topPostStoryResponse = postClient.topPostStory();
         List<SampleStoryDTO> result = new ArrayList<>();
         topPostStoryResponse.stream().forEach(sid -> result.add(ListStoryCache.getStoryById(sid)));
         return result;
     }
-
+    private List<SampleStoryDTO> getTopViews() {
+        Comparator<SampleStoryDTO> comparator = Comparator.comparingLong(SampleStoryDTO::getViews);
+        return ListStoryCache.LIST_STORIES.stream()
+                .sorted(comparator.reversed())
+                .skip(0)
+                .limit(10)
+                .collect(Collectors.toList());
+    }
     private List<SampleStoryDTO> getTopChapters() {
         Comparator<SampleStoryDTO> comparator = Comparator.comparingInt(o -> o.getChapters().size());
         return ListStoryCache.LIST_STORIES.stream()

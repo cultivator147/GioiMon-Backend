@@ -42,8 +42,8 @@ public class PostController {
         return BaseResponse.success(postService.getPost(body));
     }
     @GetMapping(value = "/top-post-story")
-    public ResponseEntity<ResponseData<Object>> topPostStory(@RequestBody GetPostStoryRequest body){
-        return BaseResponse.success(postService.topPostStory(body));
+    public ResponseEntity<ResponseData<Object>> topPostStory(){
+        return BaseResponse.success(postService.topPostStory());
     }
     @CheckPermissionAnno(uri = "create-post", scope = Scope.UPDATE)
     @PostMapping(value = "/fav-post")

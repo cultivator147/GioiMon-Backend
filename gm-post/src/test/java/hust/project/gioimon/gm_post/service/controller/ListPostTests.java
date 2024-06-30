@@ -51,10 +51,10 @@ public class ListPostTests {
     @Parameterized.Parameters
     public static Collection params() {
         return Arrays.asList(new Object[][]{
-                {1, 0, 0, 0, 0, 0, 1, 1},
-                {2, 0, 5, 0, 0, 0, 1, 1},
-                {3, 0, 5, 1, 0, 0, 1, 1},
-                {4, 0, 5, 2, 0, 0, 1, 1},
+                {1, 0, 0, 0, 1, 1, 1, 1},
+                {2, 0, 5, 0, 2, 2, 1, 1},
+                {3, 0, 5, 1, 0, 1, 1, 1},
+                {4, 0, 5, 2, 0, 2, 1, 1},
         });
     }
 

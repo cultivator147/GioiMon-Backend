@@ -2,7 +2,7 @@
 -- Host:                         127.0.0.1
 -- Server version:               8.4.0 - MySQL Community Server - GPL
 -- Server OS:                    Linux
--- HeidiSQL Version:             12.6.0.6765
+-- HeidiSQL Version:             12.3.0.6589
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -14,10 +14,12 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- Dumping structure for table gm_stories.authors
-CREATE DATABASE IF NOT EXISTS `gm_stories` ;
+
+-- Dumping database structure for gm_stories
+CREATE DATABASE IF NOT EXISTS `gm_stories`;
 USE `gm_stories`;
-DROP TABLE IF EXISTS `authors`;
+
+-- Dumping structure for table gm_stories.authors
 CREATE TABLE IF NOT EXISTS `authors` (
   `ID` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID author',
   `NAME` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Tên author',
@@ -36,7 +38,6 @@ INSERT INTO `authors` (`ID`, `NAME`, `DESCRIPTION`) VALUES
 	(6, 'Trịnh Hiếu', NULL);
 
 -- Dumping structure for table gm_stories.categories
-DROP TABLE IF EXISTS `categories`;
 CREATE TABLE IF NOT EXISTS `categories` (
   `ID` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID danh mục',
   `NAME` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Tên danh mục',
@@ -81,22 +82,23 @@ INSERT INTO `categories` (`ID`, `NAME`, `DESCRIPTION`) VALUES
 	(32, 'Romance', 'Thường là những câu chuyện về tình yêu, tình cảm lãng mạn. Ớ đây chúng ta sẽ lấy ví dụ như tình yêu giữa một người con trai và con gái, bên cạnh đó đặc điểm thể loại này là kích thích trí tưởng tượng của bạn về tình yêu');
 
 -- Dumping structure for table gm_stories.reading_history
-DROP TABLE IF EXISTS `reading_history`;
 CREATE TABLE IF NOT EXISTS `reading_history` (
   `user_id` bigint DEFAULT NULL,
   `story_id` bigint DEFAULT NULL,
   `chapter_number` bigint DEFAULT NULL,
-  `TIME` BIGINT DEFAULT NULL,
+  `TIME` bigint DEFAULT NULL,
   KEY `story_id` (`story_id`),
   CONSTRAINT `reading_history_ibfk_1` FOREIGN KEY (`story_id`) REFERENCES `stories` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table gm_stories.reading_history: ~261 rows (approximately)
+-- Dumping data for table gm_stories.reading_history: ~1 rows (approximately)
 DELETE FROM `reading_history`;
-
+INSERT INTO `reading_history` (`user_id`, `story_id`, `chapter_number`, `TIME`) VALUES
+	(1, 1, 1, 1719645113792),
+	(1, 7, 1, 1719739234456),
+	(1, 5, 1, 1719739300280);
 
 -- Dumping structure for table gm_stories.stories
-DROP TABLE IF EXISTS `stories`;
 CREATE TABLE IF NOT EXISTS `stories` (
   `ID` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID truyện',
   `TITLE` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'Tên truyện',
@@ -110,54 +112,65 @@ CREATE TABLE IF NOT EXISTS `stories` (
   `link` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '/',
   `keyword` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `last_update_date` bigint DEFAULT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Thông tin cơ bản của truyện';
+  PRIMARY KEY (`ID`),
+  KEY `title_index` (`TITLE`)
+) ENGINE=InnoDB AUTO_INCREMENT=182794 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Thông tin cơ bản của truyện';
 
--- Dumping data for table gm_stories.stories: ~39 rows (approximately)
+-- Dumping data for table gm_stories.stories: ~50 rows (approximately)
 DELETE FROM `stories`;
 INSERT INTO `stories` (`ID`, `TITLE`, `CONTENT_TYPE`, `INTRODUCTION`, `GENDER`, `WRITING_STATE`, `CHAPTER_QUANTITY`, `FLAG_STATUS`, `PICTURE`, `link`, `keyword`, `last_update_date`) VALUES
-	(1, 'Già thiên', _binary 0x31, 'Già thiên', _binary 0x30, _binary 0x32, 200, _binary 0x31, 'http://54.252.244.31:8080/images/avatar/dep.jpg', '/truyen-tranh/1', 'gia-thien', 1717557832807),
-	(2, 'Tối cường thần thoại đế hoàng', _binary 0x31, 'Tần quân', _binary 0x30, _binary 0x32, 300, _binary 0x31, 'https://tranhdecors.com/wp-content/uploads/edd/2023/09/Anh-nen-Anime-tieu-tho-anh-dao-1200x900.jpg', '/truyen-tranh/2', 'toi-cuong-than-thoai-de-hoang', 1717557832807),
-	(3, 'Cung quỷ kiếm thần', _binary 0x31, 'Nguỵ Tấn', _binary 0x30, _binary 0x32, 300, _binary 0x31, 'https://taoanhdep.com/wp-content/uploads/2023/11/hinhnen-jk.jpg', '/truyen-tranh/3', 'cung-quy-kiem-than', 1717557832807),
-	(4, 'ANH TRAI TÔI ĐẾN TỪ NÚI SÂU', _binary 0x31, 'Già thiên', _binary 0x30, _binary 0x32, 200, _binary 0x31, 'https://i.ibb.co/R62LJvF/788b23f12042806b9c55825696d5fb13.jpg;https://i.ibb.co/f2NyJrj/chi-ton-tu-la.jpg', '/truyen-tranh/4', 'anh-trai-toi-den-tu-nui-sau', 1717557832807),
-	(5, 'NÓNG LÒNG MUỐN GIÀY VÒ EM', _binary 0x31, 'GIÀY VÒ EM', _binary 0x30, _binary 0x32, 300, _binary 0x31, 'https://tranhdecors.com/wp-content/uploads/edd/2023/09/Anh-nen-Anime-tieu-tho-anh-dao-1200x900.jpg', '/truyen-tranh/5', 'nong-long-muon-giay-vo-em', 1717557832807),
-	(6, 'Ngày nào đó trở thành công chúa tế phẩm', _binary 0x31, 'CÔNG CHÚA', _binary 0x30, _binary 0x32, 300, _binary 0x31, 'https://taoanhdep.com/wp-content/uploads/2023/11/hinhnen-jk.jpg', '/truyen-tranh/6', 'ngay-nao-do-tro-thanh-cong-chua-te-pham', 1717557832807),
-	(7, 'Tham Hoan', _binary 0x31, 'Tham hoan', _binary 0x30, _binary 0x31, 190, _binary 0x31, 'https://i.ibb.co/R62LJvF/788b23f12042806b9c55825696d5fb13.jpg;https://i.ibb.co/f2NyJrj/chi-ton-tu-la.jpg', '/truyen-tranh/7', 'tham-hoan', 1717557832807),
+	(1, 'Già thiên', _binary 0x31, 'Già thiên', _binary 0x30, _binary 0x32, 200, _binary 0x31, 'https://i.pinimg.com/736x/c4/45/ec/c445eca0c0748bac574087bff8738727.jpg', '/truyen-tranh/1', 'gia-thien', 1717557832807),
+	(2, 'Tối cường thần thoại đế hoàng', _binary 0x31, 'Tần quân', _binary 0x30, _binary 0x32, 300, _binary 0x31, 'https://i.pinimg.com/originals/d8/93/7e/d8937ea41714ffb7dff3f7ab3ab2faf7.jpg', '/truyen-tranh/2', 'toi-cuong-than-thoai-de-hoang', 1717557832807),
+	(3, 'Cung quỷ kiếm thần', _binary 0x31, 'Nguỵ Tấn', _binary 0x30, _binary 0x32, 300, _binary 0x31, 'https://th.bing.com/th/id/OIP.8VWc3uaEfcixM3uDXam_mwAAAA?w=400&h=400&rs=1&pid=ImgDetMain', '/truyen-tranh/3', 'cung-quy-kiem-than', 1717557832807),
+	(4, 'ANH TRAI TÔI ĐẾN TỪ NÚI SÂU', _binary 0x31, 'Già thiên', _binary 0x30, _binary 0x32, 200, _binary 0x31, 'https://i.pinimg.com/originals/97/e4/58/97e458f3c15882b7a79a844425da5dca.jpg', '/truyen-tranh/4', 'anh-trai-toi-den-tu-nui-sau', 1717557832807),
+	(5, 'NÓNG LÒNG MUỐN GIÀY VÒ EM', _binary 0x31, 'GIÀY VÒ EM', _binary 0x30, _binary 0x32, 300, _binary 0x31, 'https://i.pinimg.com/originals/9d/fb/9a/9dfb9abcb31f3d4c40f2a134713263d9.jpg', '/truyen-tranh/5', 'nong-long-muon-giay-vo-em', 1717557832807),
+	(6, 'Ngày nào đó trở thành công chúa tế phẩm', _binary 0x31, 'CÔNG CHÚA', _binary 0x30, _binary 0x32, 300, _binary 0x31, 'https://th.bing.com/th/id/OIP.34ntTy5sVeKe2LNHylAHPQHaJ3?w=736&h=981&rs=1&pid=ImgDetMain', '/truyen-tranh/6', 'ngay-nao-do-tro-thanh-cong-chua-te-pham', 1717557832807),
+	(7, 'Tham Hoan', _binary 0x31, 'Tham hoan', _binary 0x30, _binary 0x31, 190, _binary 0x31, 'https://i.pinimg.com/736x/19/a7/29/19a7291d7e8cb5b5ba1f3514571026c5.jpg', '/truyen-tranh/7', 'tham-hoan', 1717557832807),
 	(8, 'Trấn Hồn', _binary 0x31, 'Trấn hồn', _binary 0x30, _binary 0x31, 200, _binary 0x31, 'https://kynguyenlamdep.com/wp-content/uploads/2022/08/anh-anime-nu-va-hoa-anh-dao.jpg', '/truyen-tranh/8', 'tran-hon', 1717557832807),
-	(9, 'Bàn long', _binary 0x31, 'Bàn Long', _binary 0x30, _binary 0x31, 200, _binary 0x31, 'https://i.pinimg.com/236x/78/67/5e/78675ee583c98b2b8efd990f85cc657a.jpg', '/truyen-tranh/9', 'ban-long', 1717557832807),
-	(10, 'Bởi Vì Tôi Là Ông Chú Điều Hành Một Cửa Hàng Vũ Khí', _binary 0x31, 'Tần quân', _binary 0x30, _binary 0x31, 200, _binary 0x31, 'https://i.ibb.co/R62LJvF/788b23f12042806b9c55825696d5fb13.jpg;https://i.ibb.co/f2NyJrj/chi-ton-tu-la.jpg', '/truyen-tranh/10', 'boi-vi', 1717557832807),
+	(9, 'Bàn long', _binary 0x31, 'Bàn Long', _binary 0x30, _binary 0x31, 200, _binary 0x31, 'https://kynguyenlamdep.com/wp-content/uploads/2022/08/anh-anime-dep-trai-ngau-1.jpg', '/truyen-tranh/9', 'ban-long', 1717557832807),
+	(10, 'Bởi Vì Tôi Là Ông Chú Điều Hành Một Cửa Hàng Vũ Khí', _binary 0x31, 'Tần quân', _binary 0x30, _binary 0x31, 200, _binary 0x31, 'https://th.bing.com/th/id/OIP.rTWeQhJjJx17WrLhImQTqQHaKn?w=564&h=809&rs=1&pid=ImgDetMain', '/truyen-tranh/10', 'boi-vi', 1717557832807),
 	(11, 'NGUYÊN TÔN', _binary 0x31, 'NGUYÊN TÔN', _binary 0x30, _binary 0x31, 200, _binary 0x31, 'https://tranhdecors.com/wp-content/uploads/edd/2023/09/Anh-nen-Anime-tieu-tho-anh-dao-1200x900.jpg', '/truyen-tranh/11', 'nguyen-ton', 1717557832807),
-	(12, 'ANGEL X DARKNESS', _binary 0x31, 'ANGEL X DARKNESS', _binary 0x30, _binary 0x31, 211, _binary 0x31, 'https://i.pinimg.com/236x/78/67/5e/78675ee583c98b2b8efd990f85cc657a.jpg', '/truyen-tranh/12', 'angle-x-darkness', 1717557832807),
-	(13, 'Chú Ơi Đừng Chạy!!!', _binary 0x31, 'Chú Ơi Đừng Chạy!!!', _binary 0x30, _binary 0x31, 211, _binary 0x31, 'https://taoanhdep.com/wp-content/uploads/2023/11/hinhnen-jk.jpg', '/truyen-tranh/13', 'chu-oi-dung-chay', 1717557832807),
-	(14, 'Già thiên', _binary 0x31, 'Già thiên', _binary 0x30, _binary 0x32, 200, _binary 0x31, 'https://taoanhdep.com/wp-content/uploads/2023/11/hinhnen-jk.jpg', '/truyen-tranh/1', 'gia-thien', 1717557832807),
+	(12, 'ANGEL X DARKNESS', _binary 0x31, 'ANGEL X DARKNESS', _binary 0x30, _binary 0x31, 211, _binary 0x31, 'https://th.bing.com/th/id/OIP.KmL8PCWChqPRAprv2vwOWwHaKe?w=751&h=1063&rs=1&pid=ImgDetMain', '/truyen-tranh/12', 'angle-x-darkness', 1717557832807),
+	(13, 'Chú Ơi Đừng Chạy!!!', _binary 0x31, 'Chú Ơi Đừng Chạy!!!', _binary 0x30, _binary 0x31, 211, _binary 0x31, 'https://i.pinimg.com/originals/51/12/5f/51125f1256fe469468b7599c5edbd788.jpg', '/truyen-tranh/13', 'chu-oi-dung-chay', 1717557832807),
+	(14, 'Già thiên', _binary 0x31, 'Già thiên', _binary 0x30, _binary 0x32, 200, _binary 0x31, 'https://th.bing.com/th/id/OIP.ye-GDVuZdITauHlFh8_SHwAAAA?rs=1&pid=ImgDetMain', '/truyen-tranh/1', 'gia-thien', 1717557832807),
 	(15, 'Tối cường thần thoại đế hoàng', _binary 0x31, 'Tần quân', _binary 0x30, _binary 0x32, 300, _binary 0x31, 'https://taoanhdep.com/wp-content/uploads/2023/11/hinhnen-jk.jpg', '/truyen-tranh/2', 'toi-cuong-than-thoai-de-hoang', 1717557832807),
 	(16, 'Cung quỷ kiếm thần', _binary 0x31, 'Nguỵ Tấn', _binary 0x30, _binary 0x32, 300, _binary 0x31, 'https://kynguyenlamdep.com/wp-content/uploads/2022/08/anh-anime-nu-va-hoa-anh-dao.jpg', '/truyen-tranh/3', 'cung-quy-kiem-than', 1717557832807),
 	(17, 'ANH TRAI TÔI ĐẾN TỪ NÚI SÂU', _binary 0x31, 'Già thiên', _binary 0x30, _binary 0x32, 200, _binary 0x31, 'https://i.ibb.co/R62LJvF/788b23f12042806b9c55825696d5fb13.jpg;https://i.ibb.co/f2NyJrj/chi-ton-tu-la.jpg', '/truyen-tranh/4', 'anh-trai-toi-den-tu-nui-sau', 1717557832807),
-	(18, 'NÓNG LÒNG MUỐN GIÀY VÒ EM', _binary 0x31, 'GIÀY VÒ EM', _binary 0x30, _binary 0x32, 300, _binary 0x31, 'https://i.ibb.co/R62LJvF/788b23f12042806b9c55825696d5fb13.jpg;https://i.ibb.co/f2NyJrj/chi-ton-tu-la.jpg', '/truyen-tranh/5', 'nong-long-muon-giay-vo-em', 1717557832807),
-	(19, 'Ngày nào đó trở thành công chúa tế phẩm', _binary 0x31, 'CÔNG CHÚA', _binary 0x30, _binary 0x32, 300, _binary 0x31, 'https://i.ibb.co/R62LJvF/788b23f12042806b9c55825696d5fb13.jpg;https://i.ibb.co/f2NyJrj/chi-ton-tu-la.jpg', '/truyen-tranh/6', 'ngay-nao-do-tro-thanh-cong-chua-te-pham', 1717557832807),
+	(18, 'NÓNG LÒNG MUỐN GIÀY VÒ EM', _binary 0x31, 'GIÀY VÒ EM', _binary 0x30, _binary 0x32, 300, _binary 0x31, 'https://i.pinimg.com/originals/9d/fb/9a/9dfb9abcb31f3d4c40f2a134713263d9.jpg', '/truyen-tranh/5', 'nong-long-muon-giay-vo-em', 1717557832807),
+	(19, 'Ngày nào đó trở thành công chúa tế phẩm', _binary 0x31, 'CÔNG CHÚA', _binary 0x30, _binary 0x32, 300, _binary 0x31, 'https://i.pinimg.com/736x/e5/04/dd/e504ddf59dbd051b8072662bea0c4f53.jpg', '/truyen-tranh/6', 'ngay-nao-do-tro-thanh-cong-chua-te-pham', 1717557832807),
 	(20, 'Tham Hoan', _binary 0x31, 'Tham hoan', _binary 0x30, _binary 0x31, 190, _binary 0x31, 'https://i.ibb.co/R62LJvF/788b23f12042806b9c55825696d5fb13.jpg;https://i.ibb.co/f2NyJrj/chi-ton-tu-la.jpg', '/truyen-tranh/7', 'tham-hoan', 1717557832807),
-	(21, 'Trấn Hồn', _binary 0x31, 'Trấn hồn', _binary 0x30, _binary 0x31, 200, _binary 0x31, 'https://taoanhdep.com/wp-content/uploads/2023/11/hinhnen-jk.jpg', '/truyen-tranh/8', 'tran-hon', 1717557832807),
-	(22, 'Bàn long', _binary 0x31, 'Bàn Long', _binary 0x30, _binary 0x31, 200, _binary 0x31, 'https://i.ibb.co/R62LJvF/788b23f12042806b9c55825696d5fb13.jpg;https://i.ibb.co/f2NyJrj/chi-ton-tu-la.jpg', '/truyen-tranh/9', 'ban-long', 1717557832807),
+	(21, 'Trấn Hồn', _binary 0x31, 'Trấn hồn', _binary 0x30, _binary 0x31, 200, _binary 0x31, 'https://th.bing.com/th/id/OIP.Zq38KueWK-gF3D0A19F-VgAAAA?rs=1&pid=ImgDetMain', '/truyen-tranh/8', 'tran-hon', 1717557832807),
+	(22, 'Bàn long', _binary 0x31, 'Bàn Long', _binary 0x30, _binary 0x31, 200, _binary 0x31, 'https://th.bing.com/th/id/OIP.Zq38KueWK-gF3D0A19F-VgAAAA?rs=1&pid=ImgDetMain', '/truyen-tranh/9', 'ban-long', 1717557832807),
 	(23, 'Bởi Vì Tôi Là Ông Chú Điều Hành Một Cửa Hàng Vũ Khí', _binary 0x31, 'Tần quân', _binary 0x30, _binary 0x31, 200, _binary 0x31, 'https://i.ibb.co/R62LJvF/788b23f12042806b9c55825696d5fb13.jpg;https://i.ibb.co/f2NyJrj/chi-ton-tu-la.jpg', '/truyen-tranh/10', 'boi-vi', 1717557832807),
 	(24, 'NGUYÊN TÔN', _binary 0x31, 'NGUYÊN TÔN', _binary 0x30, _binary 0x31, 200, _binary 0x31, 'https://kynguyenlamdep.com/wp-content/uploads/2022/08/anh-anime-nu-va-hoa-anh-dao.jpg', '/truyen-tranh/11', 'nguyen-ton', 1717557832807),
 	(25, 'ANGEL X DARKNESS', _binary 0x31, 'ANGEL X DARKNESS', _binary 0x30, _binary 0x31, 211, _binary 0x31, 'https://i.ibb.co/R62LJvF/788b23f12042806b9c55825696d5fb13.jpg;https://i.ibb.co/f2NyJrj/chi-ton-tu-la.jpg', '/truyen-tranh/12', 'angle-x-darkness', 1717557832807),
 	(26, 'Chú Ơi Đừng Chạy!!!', _binary 0x31, 'Chú Ơi Đừng Chạy!!!', _binary 0x30, _binary 0x31, 211, _binary 0x31, 'https://i.ibb.co/R62LJvF/788b23f12042806b9c55825696d5fb13.jpg;https://i.ibb.co/f2NyJrj/chi-ton-tu-la.jpg', '/truyen-tranh/13', 'chu-oi-dung-chay', 1717557832807),
-	(27, 'Già thiên', _binary 0x31, 'Già thiên', _binary 0x30, _binary 0x32, 200, _binary 0x31, 'https://kynguyenlamdep.com/wp-content/uploads/2022/08/anh-anime-nu-va-hoa-anh-dao.jpg', '/truyen-tranh/1', 'gia-thien', 1717557832807),
+	(27, 'Già thiên 2', _binary 0x31, 'Già thiên', _binary 0x30, _binary 0x32, 200, _binary 0x31, 'https://kynguyenlamdep.com/wp-content/uploads/2022/08/anh-anime-nu-va-hoa-anh-dao.jpg', '/truyen-tranh/1', 'gia-thien', 1717557832807),
 	(28, 'Tối cường thần thoại đế hoàng', _binary 0x31, 'Tần quân', _binary 0x30, _binary 0x32, 300, _binary 0x31, 'https://i.ibb.co/R62LJvF/788b23f12042806b9c55825696d5fb13.jpg;https://i.ibb.co/f2NyJrj/chi-ton-tu-la.jpg', '/truyen-tranh/2', 'toi-cuong-than-thoai-de-hoang', 1717557832807),
-	(29, 'Cung quỷ kiếm thần', _binary 0x31, 'Nguỵ Tấn', _binary 0x30, _binary 0x32, 300, _binary 0x31, 'https://i.ibb.co/R62LJvF/788b23f12042806b9c55825696d5fb13.jpg;https://i.ibb.co/f2NyJrj/chi-ton-tu-la.jpg', '/truyen-tranh/3', 'cung-quy-kiem-than', 1717557832807),
-	(30, 'ANH TRAI TÔI ĐẾN TỪ NÚI SÂU', _binary 0x31, 'Già thiên', _binary 0x30, _binary 0x32, 200, _binary 0x31, 'https://i.ibb.co/R62LJvF/788b23f12042806b9c55825696d5fb13.jpg;https://i.ibb.co/f2NyJrj/chi-ton-tu-la.jpg', '/truyen-tranh/4', 'anh-trai-toi-den-tu-nui-sau', 1717557832807),
+	(29, 'Cung quỷ kiếm thần', _binary 0x31, 'Nguỵ Tấn', _binary 0x30, _binary 0x32, 300, _binary 0x31, 'https://th.bing.com/th/id/OIP.KmL8PCWChqPRAprv2vwOWwHaKe?w=751&h=1063&rs=1&pid=ImgDetMain', '/truyen-tranh/3', 'cung-quy-kiem-than', 1717557832807),
+	(30, 'ANH TRAI TÔI ĐẾN TỪ NÚI SÂU', _binary 0x31, 'Già thiên', _binary 0x30, _binary 0x32, 200, _binary 0x31, 'https://i.pinimg.com/originals/48/ae/fe/48aefe7896df1e5e22d79ac3e41b6310.jpg', '/truyen-tranh/4', 'anh-trai-toi-den-tu-nui-sau', 1717557832807),
 	(31, 'NÓNG LÒNG MUỐN GIÀY VÒ EM', _binary 0x31, 'GIÀY VÒ EM', _binary 0x30, _binary 0x32, 300, _binary 0x31, 'https://i.ibb.co/R62LJvF/788b23f12042806b9c55825696d5fb13.jpg;https://i.ibb.co/f2NyJrj/chi-ton-tu-la.jpg', '/truyen-tranh/5', 'nong-long-muon-giay-vo-em', 1717557832807),
-	(32, 'Ngày nào đó trở thành công chúa tế phẩm', _binary 0x31, 'CÔNG CHÚA', _binary 0x30, _binary 0x32, 300, _binary 0x31, 'https://i.ibb.co/R62LJvF/788b23f12042806b9c55825696d5fb13.jpg;https://i.ibb.co/f2NyJrj/chi-ton-tu-la.jpg', '/truyen-tranh/6', 'ngay-nao-do-tro-thanh-cong-chua-te-pham', 1717557832807),
+	(32, 'Ngày nào đó trở thành công chúa tế phẩm', _binary 0x31, 'CÔNG CHÚA', _binary 0x30, _binary 0x32, 300, _binary 0x31, 'https://i.pinimg.com/736x/e5/04/dd/e504ddf59dbd051b8072662bea0c4f53.jpg', '/truyen-tranh/6', 'ngay-nao-do-tro-thanh-cong-chua-te-pham', 1717557832807),
 	(33, 'Tham Hoan', _binary 0x31, 'Tham hoan', _binary 0x30, _binary 0x31, 190, _binary 0x31, 'https://i.ibb.co/R62LJvF/788b23f12042806b9c55825696d5fb13.jpg;https://i.ibb.co/f2NyJrj/chi-ton-tu-la.jpg', '/truyen-tranh/7', 'tham-hoan', 1717557832807),
 	(34, 'Trấn Hồn', _binary 0x31, 'Trấn hồn', _binary 0x30, _binary 0x31, 200, _binary 0x31, 'https://i.ibb.co/R62LJvF/788b23f12042806b9c55825696d5fb13.jpg;https://i.ibb.co/f2NyJrj/chi-ton-tu-la.jpg', '/truyen-tranh/8', 'tran-hon', 1717557832807),
 	(35, 'Bàn long', _binary 0x31, 'Bàn Long', _binary 0x30, _binary 0x31, 200, _binary 0x31, 'https://i.ibb.co/R62LJvF/788b23f12042806b9c55825696d5fb13.jpg;https://i.ibb.co/f2NyJrj/chi-ton-tu-la.jpg', '/truyen-tranh/9', 'ban-long', 1717557832807),
-	(36, 'Bởi Vì Tôi Là Ông Chú Điều Hành Một Cửa Hàng Vũ Khí', _binary 0x31, 'Tần quân', _binary 0x30, _binary 0x31, 200, _binary 0x31, 'https://i.ibb.co/R62LJvF/788b23f12042806b9c55825696d5fb13.jpg;https://i.ibb.co/f2NyJrj/chi-ton-tu-la.jpg', '/truyen-tranh/10', 'boi-vi', 1717557832807),
-	(37, 'NGUYÊN TÔN', _binary 0x31, 'NGUYÊN TÔN', _binary 0x30, _binary 0x31, 200, _binary 0x31, 'https://i.ibb.co/R62LJvF/788b23f12042806b9c55825696d5fb13.jpg;https://i.ibb.co/f2NyJrj/chi-ton-tu-la.jpg', '/truyen-tranh/11', 'nguyen-ton', 1717557832807),
-	(38, 'ANGEL X DARKNESS', _binary 0x31, 'ANGEL X DARKNESS', _binary 0x30, _binary 0x31, 211, _binary 0x31, 'https://i.ibb.co/R62LJvF/788b23f12042806b9c55825696d5fb13.jpg;https://i.ibb.co/f2NyJrj/chi-ton-tu-la.jpg', '/truyen-tranh/12', 'angle-x-darkness', 1717557832807),
-	(39, 'Chú Ơi Đừng Chạy!!!', _binary 0x31, 'Chú Ơi Đừng Chạy!!!', _binary 0x30, _binary 0x31, 211, _binary 0x31, 'https://i.ibb.co/R62LJvF/788b23f12042806b9c55825696d5fb13.jpg;https://i.ibb.co/f2NyJrj/chi-ton-tu-la.jpg', '/truyen-tranh/13', 'chu-oi-dung-chay', 1717557832807);
+	(36, 'Bởi Vì Tôi Là Ông Chú Điều Hành Một Cửa Hàng Vũ Khí', _binary 0x31, 'Tần quân', _binary 0x30, _binary 0x31, 200, _binary 0x31, 'https://th.bing.com/th/id/OIP.lp4orLLFuRTCLa2-HHWgHwHaHa?w=736&h=736&rs=1&pid=ImgDetMain', '/truyen-tranh/10', 'boi-vi', 1717557832807),
+	(37, 'NGUYÊN TÔN', _binary 0x31, 'NGUYÊN TÔN', _binary 0x30, _binary 0x31, 200, _binary 0x31, 'https://th.bing.com/th/id/OIP.NghZNrSj6I4EimkIHE3OIgHaJ4?w=1080&h=1440&rs=1&pid=ImgDetMain', '/truyen-tranh/11', 'nguyen-ton', 1717557832807),
+	(38, 'ANGEL X DARKNESS', _binary 0x31, 'ANGEL X DARKNESS', _binary 0x30, _binary 0x31, 211, _binary 0x31, 'https://i.pinimg.com/736x/6c/d9/77/6cd97746011bb6b8b732e62d566db3c2.jpg', '/truyen-tranh/12', 'angle-x-darkness', 1717557832807),
+	(39, 'Chú Ơi Đừng Chạy!!!', _binary 0x31, 'Chú Ơi Đừng Chạy!!!', _binary 0x30, _binary 0x31, 211, _binary 0x31, 'https://i.pinimg.com/originals/48/ae/fe/48aefe7896df1e5e22d79ac3e41b6310.jpg', '/truyen-tranh/13', 'chu-oi-dung-chay', 1717557832807),
+	(40, 'Già thiên', _binary 0x31, 'Già thiên', _binary 0x30, _binary 0x32, 200, _binary 0x31, 'https://cdn.donmai.us/sample/fd/c8/__original_drawn_by_raki_kr__sample-fdc8d68c4fa45d2f3630afefcecdde06.jpg', '/truyen-tranh/1', 'gia-thien', 1717557832807),
+	(41, 'Tối cường thần thoại đế hoàng', _binary 0x31, 'Tần quân', _binary 0x30, _binary 0x32, 300, _binary 0x31, 'https://i.pinimg.com/originals/a6/d4/27/a6d42781bed6734e96ff2e3676256df7.jpg', '/truyen-tranh/2', 'toi-cuong-than-thoai-de-hoang', 1717557832807),
+	(42, 'Cung quỷ kiếm thần', _binary 0x31, 'Nguỵ Tấn', _binary 0x30, _binary 0x32, 300, _binary 0x31, 'https://i.pinimg.com/736x/a4/0d/9a/a40d9afcbd9debf31623e8ce66bbd7b3.jpg', '/truyen-tranh/3', 'cung-quy-kiem-than', 1717557832807),
+	(43, 'ANH TRAI TÔI ĐẾN TỪ NÚI SÂU', _binary 0x31, 'Già thiên', _binary 0x30, _binary 0x32, 200, _binary 0x31, 'https://meliawedding.com.vn/wp-content/uploads/2022/04/anh-anime-dep-trai-nhat-2.jpg', '/truyen-tranh/4', 'anh-trai-toi-den-tu-nui-sau', 1717557832807),
+	(44, 'NÓNG LÒNG MUỐN GIÀY VÒ EM', _binary 0x31, 'GIÀY VÒ EM', _binary 0x30, _binary 0x32, 300, _binary 0x31, 'https://thuthuatnhanh.com/wp-content/uploads/2020/09/hinh-anh-anime-dep-trai-vo-doi.jpg', '/truyen-tranh/5', 'nong-long-muon-giay-vo-em', 1717557832807),
+	(45, 'Ngày nào đó trở thành công chúa tế phẩm', _binary 0x31, 'CÔNG CHÚA', _binary 0x30, _binary 0x32, 300, _binary 0x31, 'https://th.bing.com/th/id/OIP.34ntTy5sVeKe2LNHylAHPQHaJ3?w=736&h=981&rs=1&pid=ImgDetMain', '/truyen-tranh/6', 'ngay-nao-do-tro-thanh-cong-chua-te-pham', 1717557832807),
+	(46, 'Tham Hoan', _binary 0x31, 'Tham hoan', _binary 0x30, _binary 0x31, 190, _binary 0x31, 'https://th.bing.com/th/id/OIP.QWhfmL6488cMk7VHfTJOxgHaJP?rs=1&pid=ImgDetMain', '/truyen-tranh/7', 'tham-hoan', 1717557832807),
+	(47, 'Trấn Hồn', _binary 0x31, 'Trấn hồn', _binary 0x30, _binary 0x31, 200, _binary 0x31, 'https://kynguyenlamdep.com/wp-content/uploads/2022/08/anh-anime-nu-va-hoa-anh-dao.jpg', '/truyen-tranh/8', 'tran-hon', 1717557832807),
+	(48, 'Bàn long', _binary 0x31, 'Bàn Long', _binary 0x30, _binary 0x31, 200, _binary 0x31, 'https://kynguyenlamdep.com/wp-content/uploads/2022/08/anh-anime-dep-trai-ngau-1.jpg', '/truyen-tranh/9', 'ban-long', 1717557832807),
+	(49, 'Bởi Vì Tôi Là Ông Chú Điều Hành Một Cửa Hàng Vũ Khí', _binary 0x31, 'Tần quân', _binary 0x30, _binary 0x31, 200, _binary 0x31, 'https://th.bing.com/th/id/OIP.rTWeQhJjJx17WrLhImQTqQHaKn?w=564&h=809&rs=1&pid=ImgDetMain', '/truyen-tranh/10', 'boi-vi', 1717557832807),
+	(50, 'NGUYÊN TÔN', _binary 0x31, 'NGUYÊN TÔN', _binary 0x30, _binary 0x31, 200, _binary 0x31, 'https://tranhdecors.com/wp-content/uploads/edd/2023/09/Anh-nen-Anime-tieu-tho-anh-dao-1200x900.jpg', '/truyen-tranh/11', 'nguyen-ton', 1717557832807);
 
 -- Dumping structure for table gm_stories.stories_authors
-DROP TABLE IF EXISTS `stories_authors`;
 CREATE TABLE IF NOT EXISTS `stories_authors` (
   `AUTHOR_ID` bigint DEFAULT NULL,
   `STORY_ID` bigint DEFAULT NULL,
@@ -192,7 +205,6 @@ INSERT INTO `stories_authors` (`AUTHOR_ID`, `STORY_ID`) VALUES
 	(1, 2);
 
 -- Dumping structure for table gm_stories.stories_categories
-DROP TABLE IF EXISTS `stories_categories`;
 CREATE TABLE IF NOT EXISTS `stories_categories` (
   `STORY_ID` bigint DEFAULT NULL COMMENT 'ID truyện',
   `CATEGORY_ID` bigint DEFAULT NULL COMMENT 'ID danh mục',
@@ -202,7 +214,7 @@ CREATE TABLE IF NOT EXISTS `stories_categories` (
   CONSTRAINT `FK_STORIES` FOREIGN KEY (`STORY_ID`) REFERENCES `stories` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Danh mục của từng truyện';
 
--- Dumping data for table gm_stories.stories_categories: ~66 rows (approximately)
+-- Dumping data for table gm_stories.stories_categories: ~0 rows (approximately)
 DELETE FROM `stories_categories`;
 INSERT INTO `stories_categories` (`STORY_ID`, `CATEGORY_ID`) VALUES
 	(1, 2),
@@ -273,7 +285,6 @@ INSERT INTO `stories_categories` (`STORY_ID`, `CATEGORY_ID`) VALUES
 	(38, 10);
 
 -- Dumping structure for table gm_stories.stories_chapters
-DROP TABLE IF EXISTS `stories_chapters`;
 CREATE TABLE IF NOT EXISTS `stories_chapters` (
   `CHAPTER_NUMBER` bigint NOT NULL COMMENT 'Số thứ tự chương truyện',
   `STORY_ID` bigint NOT NULL COMMENT 'ID của truyện',
@@ -289,16 +300,16 @@ CREATE TABLE IF NOT EXISTS `stories_chapters` (
   CONSTRAINT `FK_STORIES_CHAPTERS` FOREIGN KEY (`STORY_ID`) REFERENCES `stories` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Các chapters của truyện';
 
--- Dumping data for table gm_stories.stories_chapters: ~31 rows (approximately)
+-- Dumping data for table gm_stories.stories_chapters: ~0 rows (approximately)
 DELETE FROM `stories_chapters`;
 INSERT INTO `stories_chapters` (`CHAPTER_NUMBER`, `STORY_ID`, `PICTURE`, `CONTENT`, `VIEWS`, `FLAG_STATUS`, `SCOPE`, `CHAPTER_NAME`, `update_date`) VALUES
-	(1, 1, 'https://www.nettruyenus.com/truyen-tranh/gia-thien/chap-1/56459', '["https://bloganchoi.com/wp-content/uploads/2021/03/dieu-nho-xiu-xiu.jpg","https://i.pinimg.com/736x/37/b7/52/37b7528dc83d8955861852543f43712d.jpg","https://i.pinimg.com/originals/26/90/ce/2690ce31b49f3813ca167d2c76da1eef.jpg","https://i.pinimg.com/736x/86/55/ac/8655ac34915021ab2b11547e5e8f52ef--comic-book-manga.jpg","https://i.pinimg.com/originals/97/ed/56/97ed564e72bcdc5a808fc5205926fb36.jpg","https://i.pinimg.com/originals/e1/66/16/e16616e26de21e8ca56da9ee531ef8e0.jpg",https://i.imgur.com/TtTcXtt.jpg","https://i.pinimg.com/736x/01/bc/32/01bc3264e1db312193e7f113592f3d00.jpg"]', 275, _binary 0x31, _binary 0x31, NULL, 1717557832807),
+	(1, 1, 'https://www.nettruyenus.com/truyen-tranh/gia-thien/chap-1/56459', '["https://bloganchoi.com/wp-content/uploads/2021/03/dieu-nho-xiu-xiu.jpg","https://i.pinimg.com/736x/37/b7/52/37b7528dc83d8955861852543f43712d.jpg","https://i.pinimg.com/originals/26/90/ce/2690ce31b49f3813ca167d2c76da1eef.jpg","https://i.pinimg.com/736x/86/55/ac/8655ac34915021ab2b11547e5e8f52ef--comic-book-manga.jpg","https://i.pinimg.com/originals/97/ed/56/97ed564e72bcdc5a808fc5205926fb36.jpg","https://i.pinimg.com/originals/e1/66/16/e16616e26de21e8ca56da9ee531ef8e0.jpg",https://i.imgur.com/TtTcXtt.jpg","https://i.pinimg.com/736x/01/bc/32/01bc3264e1db312193e7f113592f3d00.jpg"]', 276, _binary 0x31, _binary 0x31, NULL, 1717557832807),
 	(1, 2, 'https://nettruyenco.vn/truyen-tranh/toi-cuong-than-thoai-de-hoang/chuong-1/648857', '["https://bloganchoi.com/wp-content/uploads/2021/03/dieu-nho-xiu-xiu.jpg","https://i.pinimg.com/736x/37/b7/52/37b7528dc83d8955861852543f43712d.jpg","https://i.pinimg.com/originals/26/90/ce/2690ce31b49f3813ca167d2c76da1eef.jpg","https://i.pinimg.com/736x/86/55/ac/8655ac34915021ab2b11547e5e8f52ef--comic-book-manga.jpg","https://i.pinimg.com/originals/97/ed/56/97ed564e72bcdc5a808fc5205926fb36.jpg","https://i.pinimg.com/originals/e1/66/16/e16616e26de21e8ca56da9ee531ef8e0.jpg",https://i.imgur.com/TtTcXtt.jpg","https://i.pinimg.com/736x/01/bc/32/01bc3264e1db312193e7f113592f3d00.jpg"]', 246, _binary 0x31, _binary 0x31, NULL, 1717557832807),
 	(1, 3, 'https://www.nettruyenus.com/truyen-tranh/gia-thien/chap-1/56459', '["https://bloganchoi.com/wp-content/uploads/2021/03/dieu-nho-xiu-xiu.jpg","https://i.pinimg.com/736x/37/b7/52/37b7528dc83d8955861852543f43712d.jpg","https://i.pinimg.com/originals/26/90/ce/2690ce31b49f3813ca167d2c76da1eef.jpg","https://i.pinimg.com/736x/86/55/ac/8655ac34915021ab2b11547e5e8f52ef--comic-book-manga.jpg","https://i.pinimg.com/originals/97/ed/56/97ed564e72bcdc5a808fc5205926fb36.jpg","https://i.pinimg.com/originals/e1/66/16/e16616e26de21e8ca56da9ee531ef8e0.jpg",https://i.imgur.com/TtTcXtt.jpg","https://i.pinimg.com/736x/01/bc/32/01bc3264e1db312193e7f113592f3d00.jpg"]', 236, _binary 0x31, _binary 0x31, NULL, 1717557832807),
 	(1, 4, 'https://www.nettruyenus.com/truyen-tranh/gia-thien/chap-1/56459', '["https://bloganchoi.com/wp-content/uploads/2021/03/dieu-nho-xiu-xiu.jpg","https://i.pinimg.com/736x/37/b7/52/37b7528dc83d8955861852543f43712d.jpg","https://i.pinimg.com/originals/26/90/ce/2690ce31b49f3813ca167d2c76da1eef.jpg","https://i.pinimg.com/736x/86/55/ac/8655ac34915021ab2b11547e5e8f52ef--comic-book-manga.jpg","https://i.pinimg.com/originals/97/ed/56/97ed564e72bcdc5a808fc5205926fb36.jpg","https://i.pinimg.com/originals/e1/66/16/e16616e26de21e8ca56da9ee531ef8e0.jpg",https://i.imgur.com/TtTcXtt.jpg","https://i.pinimg.com/736x/01/bc/32/01bc3264e1db312193e7f113592f3d00.jpg"]', 806, _binary 0x31, _binary 0x31, NULL, 1717557832807),
-	(1, 5, 'https://nettruyenco.vn/truyen-tranh/toi-cuong-than-thoai-de-hoang/chuong-1/648857', '["https://bloganchoi.com/wp-content/uploads/2021/03/dieu-nho-xiu-xiu.jpg","https://i.pinimg.com/736x/37/b7/52/37b7528dc83d8955861852543f43712d.jpg","https://i.pinimg.com/originals/26/90/ce/2690ce31b49f3813ca167d2c76da1eef.jpg","https://i.pinimg.com/736x/86/55/ac/8655ac34915021ab2b11547e5e8f52ef--comic-book-manga.jpg","https://i.pinimg.com/originals/97/ed/56/97ed564e72bcdc5a808fc5205926fb36.jpg","https://i.pinimg.com/originals/e1/66/16/e16616e26de21e8ca56da9ee531ef8e0.jpg",https://i.imgur.com/TtTcXtt.jpg","https://i.pinimg.com/736x/01/bc/32/01bc3264e1db312193e7f113592f3d00.jpg"]', 357, _binary 0x31, _binary 0x31, NULL, 1717557832807),
+	(1, 5, 'https://nettruyenco.vn/truyen-tranh/toi-cuong-than-thoai-de-hoang/chuong-1/648857', '["https://bloganchoi.com/wp-content/uploads/2021/03/dieu-nho-xiu-xiu.jpg","https://i.pinimg.com/736x/37/b7/52/37b7528dc83d8955861852543f43712d.jpg","https://i.pinimg.com/originals/26/90/ce/2690ce31b49f3813ca167d2c76da1eef.jpg","https://i.pinimg.com/736x/86/55/ac/8655ac34915021ab2b11547e5e8f52ef--comic-book-manga.jpg","https://i.pinimg.com/originals/97/ed/56/97ed564e72bcdc5a808fc5205926fb36.jpg","https://i.pinimg.com/originals/e1/66/16/e16616e26de21e8ca56da9ee531ef8e0.jpg",https://i.imgur.com/TtTcXtt.jpg","https://i.pinimg.com/736x/01/bc/32/01bc3264e1db312193e7f113592f3d00.jpg"]', 358, _binary 0x31, _binary 0x31, NULL, 1717557832807),
 	(1, 6, 'https://www.nettruyenus.com/truyen-tranh/gia-thien/chap-2/56460', '["https://bloganchoi.com/wp-content/uploads/2021/03/dieu-nho-xiu-xiu.jpg","https://i.pinimg.com/736x/37/b7/52/37b7528dc83d8955861852543f43712d.jpg","https://i.pinimg.com/originals/26/90/ce/2690ce31b49f3813ca167d2c76da1eef.jpg","https://i.pinimg.com/736x/86/55/ac/8655ac34915021ab2b11547e5e8f52ef--comic-book-manga.jpg","https://i.pinimg.com/originals/97/ed/56/97ed564e72bcdc5a808fc5205926fb36.jpg","https://i.pinimg.com/originals/e1/66/16/e16616e26de21e8ca56da9ee531ef8e0.jpg",https://i.imgur.com/TtTcXtt.jpg","https://i.pinimg.com/736x/01/bc/32/01bc3264e1db312193e7f113592f3d00.jpg"]', 228, _binary 0x31, _binary 0x31, NULL, 1717557832807),
-	(1, 7, 'https://nettruyenviet.com/truyen-tranh/tham-hoan/chuong-1', '["https://bloganchoi.com/wp-content/uploads/2021/03/dieu-nho-xiu-xiu.jpg","https://i.pinimg.com/736x/37/b7/52/37b7528dc83d8955861852543f43712d.jpg","https://i.pinimg.com/originals/26/90/ce/2690ce31b49f3813ca167d2c76da1eef.jpg","https://i.pinimg.com/736x/86/55/ac/8655ac34915021ab2b11547e5e8f52ef--comic-book-manga.jpg","https://i.pinimg.com/originals/97/ed/56/97ed564e72bcdc5a808fc5205926fb36.jpg","https://i.pinimg.com/originals/e1/66/16/e16616e26de21e8ca56da9ee531ef8e0.jpg",https://i.imgur.com/TtTcXtt.jpg","https://i.pinimg.com/736x/01/bc/32/01bc3264e1db312193e7f113592f3d00.jpg"]', 38, _binary 0x31, _binary 0x31, NULL, 1717557832807),
+	(1, 7, 'https://nettruyenviet.com/truyen-tranh/tham-hoan/chuong-1', '["https://bloganchoi.com/wp-content/uploads/2021/03/dieu-nho-xiu-xiu.jpg","https://i.pinimg.com/736x/37/b7/52/37b7528dc83d8955861852543f43712d.jpg","https://i.pinimg.com/originals/26/90/ce/2690ce31b49f3813ca167d2c76da1eef.jpg","https://i.pinimg.com/736x/86/55/ac/8655ac34915021ab2b11547e5e8f52ef--comic-book-manga.jpg","https://i.pinimg.com/originals/97/ed/56/97ed564e72bcdc5a808fc5205926fb36.jpg","https://i.pinimg.com/originals/e1/66/16/e16616e26de21e8ca56da9ee531ef8e0.jpg",https://i.imgur.com/TtTcXtt.jpg","https://i.pinimg.com/736x/01/bc/32/01bc3264e1db312193e7f113592f3d00.jpg"]', 39, _binary 0x31, _binary 0x31, NULL, 1717557832807),
 	(2, 1, 'https://www.nettruyenus.com/truyen-tranh/gia-thien/chap-2/56460', '["https://bloganchoi.com/wp-content/uploads/2021/03/dieu-nho-xiu-xiu.jpg","https://i.pinimg.com/736x/37/b7/52/37b7528dc83d8955861852543f43712d.jpg","https://i.pinimg.com/originals/26/90/ce/2690ce31b49f3813ca167d2c76da1eef.jpg","https://i.pinimg.com/736x/86/55/ac/8655ac34915021ab2b11547e5e8f52ef--comic-book-manga.jpg","https://i.pinimg.com/originals/97/ed/56/97ed564e72bcdc5a808fc5205926fb36.jpg","https://i.pinimg.com/originals/e1/66/16/e16616e26de21e8ca56da9ee531ef8e0.jpg",https://i.imgur.com/TtTcXtt.jpg","https://i.pinimg.com/736x/01/bc/32/01bc3264e1db312193e7f113592f3d00.jpg"]', 250, _binary 0x31, _binary 0x31, NULL, 1717557832807),
 	(3, 1, 'https://www.nettruyenus.com/truyen-tranh/gia-thien/chap-1/56459', '["https://bloganchoi.com/wp-content/uploads/2021/03/dieu-nho-xiu-xiu.jpg","https://i.pinimg.com/736x/37/b7/52/37b7528dc83d8955861852543f43712d.jpg","https://i.pinimg.com/originals/26/90/ce/2690ce31b49f3813ca167d2c76da1eef.jpg","https://i.pinimg.com/736x/86/55/ac/8655ac34915021ab2b11547e5e8f52ef--comic-book-manga.jpg","https://i.pinimg.com/originals/97/ed/56/97ed564e72bcdc5a808fc5205926fb36.jpg","https://i.pinimg.com/originals/e1/66/16/e16616e26de21e8ca56da9ee531ef8e0.jpg",https://i.imgur.com/TtTcXtt.jpg","https://i.pinimg.com/736x/01/bc/32/01bc3264e1db312193e7f113592f3d00.jpg"]', 208, _binary 0x31, _binary 0x31, NULL, 1717557832807),
 	(4, 1, 'https://www.nettruyenus.com/truyen-tranh/gia-thien/chap-2/56460', '["https://bloganchoi.com/wp-content/uploads/2021/03/dieu-nho-xiu-xiu.jpg","https://i.pinimg.com/736x/37/b7/52/37b7528dc83d8955861852543f43712d.jpg","https://i.pinimg.com/originals/26/90/ce/2690ce31b49f3813ca167d2c76da1eef.jpg","https://i.pinimg.com/736x/86/55/ac/8655ac34915021ab2b11547e5e8f52ef--comic-book-manga.jpg","https://i.pinimg.com/originals/97/ed/56/97ed564e72bcdc5a808fc5205926fb36.jpg","https://i.pinimg.com/originals/e1/66/16/e16616e26de21e8ca56da9ee531ef8e0.jpg",https://i.imgur.com/TtTcXtt.jpg","https://i.pinimg.com/736x/01/bc/32/01bc3264e1db312193e7f113592f3d00.jpg"]', 2232, _binary 0x31, _binary 0x31, NULL, 1717557832807),

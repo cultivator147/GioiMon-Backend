@@ -103,7 +103,7 @@ public class ListStoriesRepository extends BaseRepository {
     }
     public Page<HistoryStory> getReadingStory(Long userId, int page, int size){
         String sqlBuilder = """
-                    SELECT * FROM reading_history WHERE user_id = :userId
+                    SELECT * FROM reading_history WHERE user_id = :userId ORDER BY time DESC
                 """;
         Map<String, Object> params = new HashMap<>();
         params.put("userId", userId);

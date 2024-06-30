@@ -33,7 +33,7 @@ public class PostService {
         return postOpt.orElse(null);
     }
 
-    public List<Long> topPostStory(GetPostStoryRequest body) {
+    public List<Long> topPostStory() {
         return postJDBCRepository.getTopStoryByPost();
     }
     public void updateFavInteraction(long postId, long favCount, double favAvgPoint){
