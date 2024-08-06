@@ -22,4 +22,5 @@ public class SampleStoryDTO {
     private long loves;
     private List<ChapterDTO> chapters;
     private Long chaptersQuantity;
+    private String gender;
 }

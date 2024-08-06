@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public interface FilteredListStoriesService {
-    Page<SampleStoryDTO> getFilteredListStories(long categoryId, int writingState, String keyword, int page, int size, String sortBy);
+    Page<SampleStoryDTO> getFilteredListStories(Long userId, long categoryId, int writingState, String keyword, int page, int size, String sortBy);
     List<SampleStoryDTO> getSuggestedListStories();
     Page<HistoryStory> getReadingStory(Long userId, int page, int size);
     Page<SampleStoryDTO> getTopStories(long categoryId, int page, int size, String sortBy);

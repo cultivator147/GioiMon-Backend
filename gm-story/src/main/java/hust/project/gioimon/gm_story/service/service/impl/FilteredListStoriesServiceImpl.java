@@ -1,9 +1,11 @@
 package hust.project.gioimon.gm_story.service.service.impl;
 
 import hust.project.gioimon.gm_story.client.feign_client.PostClient;
+import hust.project.gioimon.gm_story.client.feign_client.UserClient;
 import hust.project.gioimon.gm_story.client.model.GetPostStoryRequest;
 import hust.project.gioimon.gm_story.service.cache.ListStoryCache;
 import hust.project.gioimon.gm_story.service.constant.Common;
+import hust.project.gioimon.gm_story.service.model.Profile;
 import hust.project.gioimon.gm_story.service.repository.ListStoriesRepository;
 import hust.project.gioimon.gm_story.service.model.HistoryStory;
 import hust.project.gioimon.gm_story.service.model.SampleStoryDTO;
@@ -30,8 +32,9 @@ public class FilteredListStoriesServiceImpl implements FilteredListStoriesServic
     private final StoryService storyService;
     private final ListStoriesRepository listStoriesRepository;
     private final PostClient postClient;
+    private final UserClient userClient;
     @Override
-    public Page<SampleStoryDTO> getFilteredListStories(long categoryId, int writingState, String keyword, int page, int size, String sortBy) {
+    public Page<SampleStoryDTO> getFilteredListStories(Long userId, long categoryId, int writingState, String keyword, int page, int size, String sortBy) {
         System.out.println("keyword:"+ keyword);
         if(keyword.isEmpty()){
                 Page<SampleStoryDTO> sampleStoryDTOPage = listStoriesRepository.getFilteredListStories(categoryId, writingState, page, size, sortBy);
@@ -80,6 +83,9 @@ public class FilteredListStoriesServiceImpl implements FilteredListStoriesServic
                     List<SampleStoryDTO> content = sampleStoryDTOPage.getContent().stream().sorted(com.reversed()).collect(Collectors.toList());
                     content.stream().forEach(story -> story.setChaptersQuantity(ListStoryCache.getChapterQuantity(story.getId())));
                     content.stream().forEach(story -> story.setViews(ListStoryCache.getViews(story.getId())));
+                    Profile p = userClient.getProfile(new Profile(userId)).getData();
+                    String gender = p.getGender().get(0);
+                    content.removeIf(story -> !story.getGender().equals(gender));
                     return content;
                 }
 
