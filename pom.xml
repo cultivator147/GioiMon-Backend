@@ -9,12 +9,12 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>hust.project.gioimon</groupId>
-    <artifactId>gm-parent</artifactId>
+    <groupId>project.spring-base</groupId>
+    <artifactId>sb-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Gioi Mon</name>
-    <description>Gioi Mon Microservices System</description>
+    <name>Spring base project</name>
+    <description>Spring base Microservices System</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -24,10 +24,9 @@
 
     <modules>
         <module>eureka-server</module>
-        <module>gm-gateway</module>
-        <module>gm-story</module>
-        <module>gm-post</module>
-        <module>gm-user</module>
+        <module>api-gateway</module>
+        <module>service-one</module>
+        <module>auth-service</module>
     </modules>
     <build>
         <plugins>
